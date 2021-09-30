@@ -162,12 +162,14 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Ghostly biscuit' ||
 			   Game.UpgradesInStore[i].name == 'Lovesick biscuit' ||
 			   Game.UpgradesInStore[i].name == 'Fool\'s biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Bunny biscuit' 
+			   Game.UpgradesInStore[i].name == 'Bunny biscuit'  ||
+			   Game.UpgradesInStore[i].name == 'Golden switch [off]' 
+			   Game.UpgradesInStore[i].name == 'Golden switch [on]' 
 			) {
 				deltaCps = -1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
-				if((Game.Upgrades['Bingo center/Research facility'].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
+				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
 					deltaCps = Game.UpgradesInStore[i].getPrice();
 				}
 				else {
@@ -175,10 +177,10 @@ CookieAutoClicker.launch = function() {
 				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond) * 0.01;
+				deltaCps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.01;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
+				deltaCps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.02;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
@@ -202,13 +204,28 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Lucky day') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
+					deltaCps = Game.UpgradesInStore[i].getPrice();
+				}
+				else {
+					deltaCps = -1;
+				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Serendipity') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
+					deltaCps = Game.UpgradesInStore[i].getPrice();
+				}
+				else {
+					deltaCps = -1;
+				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Get lucky') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
+					deltaCps = Game.UpgradesInStore[i].getPrice();
+				}
+				else {
+					deltaCps = -1;
+				}
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
