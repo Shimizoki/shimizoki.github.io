@@ -29,6 +29,10 @@ CookieAutoClicker.launch = function() {
 			Game.ShowMenu('log');
 		}
 		
+		if(Game.HasAchiev('Here you go') == 0) {
+			Game.AchievementsById[204].click();
+		}
+		
 		// Interval for calculating CPS
 		CookieAutoClicker.CalculateClicksPerSecond();
 		
