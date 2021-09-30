@@ -142,7 +142,7 @@ CookieAutoClicker.launch = function() {
 		for(let i = 0; i < Game.shimmers.length; i++) {
 			if(Game.shimmers[i].type == 'golden') {
 				Game.shimmers[i].pop();
-				castForceHand();
+				CookieAutoClicker.castForceHand();
 			}
 		}
 	}
