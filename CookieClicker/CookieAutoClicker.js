@@ -13,7 +13,6 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.init = async function() {
         'use strict';
 		
-		console.log("Launching CookieAutoClicker!");
         CookieAutoClicker.isLoaded = 1;
 		
         CookieAutoClicker.addDisplay();
@@ -172,13 +171,18 @@ CookieAutoClicker.launch = function() {
     CookieAutoClicker.sleep = function(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+	
+	if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
 }
 
 if(!CookieAutoClicker.isLoaded){
+	console.log("CookieAutoClicker Not Loaded!");
     if(CCSE && CCSE.isLoaded){
+		console.log("CCSE is Loaded... Launcing CookieAutoClicker");
     	CookieAutoClicker.launch();
     }
     else{
+		console.log("CCSE is not Loaded... Adding CookieAutoClicker to post load hooks");
     	if(!CCSE) var CCSE = {};
     	if(!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
     	CCSE.postLoadHooks.push(CookieAutoClicker.launch);
