@@ -78,7 +78,7 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.ClickCookiePeriod = 4;
 	CookieAutoClicker.ClickCookie = function() {
 		Game.ClickCookie();
-		CookieAutoClicker.ClickCookieTimeout = setTimeout(ClickCookie, CookieAutoClicker.ClickCookiePeriod);
+		CookieAutoClicker.ClickCookieTimeout = setTimeout(CookieAutoClicker.ClickCookie, CookieAutoClicker.ClickCookiePeriod);
 	}
 	CookieAutoClicker.StopClickCookie = function() {
 		clearTimeout(CookieAutoClicker.ClickCookieTimeout);
@@ -88,7 +88,7 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.ClickGoldenCookiePeriod = 100;
 	CookieAutoClicker.ClickGoldenCookie = function() {
 		CookieAutoClicker.clickGoldenCookie();
-		CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(ClickGoldenCookie, CookieAutoClicker.ClickGoldenCookiePeriod);
+		CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(CookieAutoClicker.ClickGoldenCookie, CookieAutoClicker.ClickGoldenCookiePeriod);
 	}
 	CookieAutoClicker.StopClickGoldenCookie = function() {
 		clearTimeout(CookieAutoClicker.ClickGoldenCookieTimeout);
