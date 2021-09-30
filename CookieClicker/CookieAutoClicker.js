@@ -88,21 +88,22 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.CalculateClicksPerSecondTimeout = 0;
-	CookieAutoClicker.CalculateClicksPerSecondPeriod = 100;
+	CookieAutoClicker.CalculateClicksPerSecondPeriod = 1000;
 	{
 		let cookieClicksLastCheck = Game.cookieClicks;
-		let cookieClicksList = [Game.cookieClicks, Game.cookieClicks, Game.cookieClicks, Game.cookieClicks, Game.cookieClicks];
+		let cookieClicksList = [0, 0, 0, 0, 0];
 		let cookieClicksListIndex = 0;
 		CookieAutoClicker.CalculateClicksPerSecond = function() {
 			cookieClicksList[cookieClicksListIndex] = (Game.cookieClicks - cookieClicksLastCheck) / (CookieAutoClicker.CalculateClicksPerSecondPeriod / 1000);
-			cookieClicksListIndex = (cookieClicksListIndex+1)%cookieClicksList.Count;
+			cookieClicksListIndex = (cookieClicksListIndex + 1) % 5;
+			cookieClicksLastCheck = Game.cookieClicks;
 			
 			let sum = 0;
-			for (let i = 0; i < cookieClicksList.Count; i++) {
+			for (let i = 0; i < 5; i++) {
 				sum += cookieClicksList[i];
 			}
 			
-			CookieAutoClicker.clicksPerSecond = sum / cookieClicksList.Count;
+			CookieAutoClicker.clicksPerSecond = sum / 5;
 			CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(CookieAutoClicker.CalculateClicksPerSecond, CookieAutoClicker.CalculateClicksPerSecondPeriod);
 		}
 	}
