@@ -176,7 +176,7 @@ CookieAutoClicker.launch = function() {
 				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.1;
+				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond) * 0.1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
