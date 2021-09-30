@@ -24,7 +24,9 @@ CookieAutoClicker.launch = function() {
 		}
 		
 		if(Game.HasAchiev('Olden days') == 0) {
+			Game.ShowMenu('log');
 			document.querySelector("#menu").lastChild.lastChild.click();
+			Game.ShowMenu('log');
 		}
 		
 		// Interval for calculating CPS
