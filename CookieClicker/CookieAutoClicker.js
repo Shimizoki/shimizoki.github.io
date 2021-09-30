@@ -14,6 +14,7 @@ CookieAutoClicker.launch = function() {
         'use strict';
 		
         CookieAutoClicker.isLoaded = 1;
+		CookieAutoClicker.restoreDefaultConfig();
 		
         CookieAutoClicker.addDisplay();
         CookieAutoClicker.updateDisplay(CookieAutoClicker.nextPurchase);
@@ -68,10 +69,20 @@ CookieAutoClicker.launch = function() {
     }
     
     CookieAutoClicker.save = function() {
+		return JSON.stringify(CookieAutoClicker.config);
 	}
 
 	CookieAutoClicker.load = function(str) {
+		var config = JSON.parse(str);
 	}
+	
+	CookieAutoClicker.defaultConfig = function(){
+		return {}
+	}
+	CookieAutoClicker.restoreDefaultConfig = function(){
+		CookieAutoClicker.config = CookieAutoClicker.defaultConfig();
+	}
+
     
     CookieAutoClicker.calcBestBuilding = function() {
         let bestRoi = 10000000000000;
