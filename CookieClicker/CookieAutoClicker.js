@@ -164,7 +164,7 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Fool\'s Biscut' ||
 			   Game.UpgradesInStore[i].name == 'Bunny Biscut' 
 			) {
-				deltaCps = 1;
+				deltaCps = -1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
 				if((Game.Upgrades['Bingo center/Research facility'].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
