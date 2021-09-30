@@ -163,7 +163,7 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Lovesick biscuit' ||
 			   Game.UpgradesInStore[i].name == 'Fool\'s biscuit' ||
 			   Game.UpgradesInStore[i].name == 'Bunny biscuit'  ||
-			   Game.UpgradesInStore[i].name == 'Golden switch [off]' 
+			   Game.UpgradesInStore[i].name == 'Golden switch [off]' ||
 			   Game.UpgradesInStore[i].name == 'Golden switch [on]' 
 			) {
 				deltaCps = -1;
