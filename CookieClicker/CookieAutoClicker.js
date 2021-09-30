@@ -164,7 +164,7 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Fool\'s Biscut' ||
 			   Game.UpgradesInStore[i].name == 'Bunny Biscut' 
 			) {
-				deltaCps = 9999999999999999;
+				deltaCps = 1;
 			}
 			
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
@@ -176,7 +176,7 @@ CookieAutoClicker.launch = function() {
 				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond) * 0.1;
+				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond) * 0.01;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
