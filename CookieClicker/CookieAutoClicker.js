@@ -118,12 +118,12 @@ CookieAutoClicker.launch = function() {
     
     CookieAutoClicker.calcBuildingCps = function(buildingId) {
     
-        let curCps = Game.cookiesPs + (Game.computedMouseCps*clicksPerSecond);
+        let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
     
         Game.ObjectsById[buildingId].getFree(1);
         Game.CalculateGains();
     
-        let newCps = Game.cookiesPs + (Game.computedMouseCps*clicksPerSecond);
+        let newCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
     
         Game.ObjectsById[buildingId].getFree(-1);
         Game.CalculateGains();
