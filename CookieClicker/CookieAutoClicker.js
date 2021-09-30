@@ -119,7 +119,7 @@ CookieAutoClicker.launch = function() {
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
-			if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
+			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else {
