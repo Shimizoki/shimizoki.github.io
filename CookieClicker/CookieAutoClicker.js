@@ -149,6 +149,9 @@ CookieAutoClicker.launch = function() {
 			else if(Game.UpgradesInStore[i].name == 'Lucky day') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
 			}
+			else if(Game.UpgradesInStore[i].name == 'Serendipity') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
