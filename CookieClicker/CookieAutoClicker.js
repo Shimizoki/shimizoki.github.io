@@ -28,21 +28,8 @@ CookieAutoClicker.launch = function() {
 		}
 		
 		// Interval for calculating CPS
-		let cookiesLastInterval = Game.cookies;
-		setInterval(()=>{
-			let cps = Game.cookies - cookiesLastInterval;
-			cookiesLastInterval = Game.cookies;
-	
-			// Back out early if I bought something
-			if(cps < 0) { return; }
-	
-			let autoCps = Game.cookiesPs;
-			let clickCps = cps - autoCps;
-			CookieAutoClicker.clicksPerSecond = Math.round(clickCps / Game.computedMouseCps);
-	
-			//console.log("CPS: " + cps + " | Click CPS" + clickCps + " | Clicks Per Second " + clicksPerSecond);
-		}, 1000)
-	
+		CookieAutoClicker.CalculateClicksPerSecond();
+		
 		// Interval for clicking on the Golden cookies
 		CookieAutoClicker.ClickCookie();
 		CookieAutoClicker.ClickGoldenCookie();
@@ -94,6 +81,19 @@ CookieAutoClicker.launch = function() {
 		clearTimeout(CookieAutoClicker.ClickGoldenCookieTimeout);
 	}
 	
+	CookieAutoClicker.CalculateClicksPerSecondTimeout = 0;
+	CookieAutoClicker.CalculateClicksPerSecondPeriod = 100;
+	{
+		let cookieClicksLastCheck = Game.cookieClicks;
+		CookieAutoClicker.CalculateClicksPerSecond = function() {
+			CookieAutoClicker.clicksPerSecond = (Game.cookieClicks - cookieClicksLastCheck) / (CookieAutoClicker.CalculateClicksPerSecondPeriod / 1000);
+			CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(CookieAutoClicker.CalculateClicksPerSecond, CookieAutoClicker.CalculateClicksPerSecondPeriod);
+		}
+	}
+	CookieAutoClicker.StopCalculateClicksPerSecond = function() {
+		clearTimeout(CookieAutoClicker.CalculateClicksPerSecondTimeout);
+	}
+	
 	CookieAutoClicker.save = function() {
 		return JSON.stringify(CookieAutoClicker.config);
 	}
@@ -138,13 +138,13 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Underworld ovens') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
