@@ -43,11 +43,9 @@ CookieAutoClicker.launch = function() {
 			//console.log("CPS: " + cps + " | Click CPS" + clickCps + " | Clicks Per Second " + clicksPerSecond);
 		}, 1000)
 	
-		// Interval for clicking on the cookies
-		setInterval(()=>{
-			Game.ClickCookie();
-			CookieAutoClicker.clickGoldenCookie();
-		}, 4)
+		// Interval for clicking on the Golden cookies
+		CookieAutoClicker.ClickCookie();
+		CookieAutoClicker.ClickGoldenCookie();
 	
 		// Interval for buying Buildings and Upgrades
 		setInterval(()=>{
@@ -74,6 +72,26 @@ CookieAutoClicker.launch = function() {
 			}
 	
 		}, 100)
+	}
+	
+	CookieAutoClicker.ClickCookieTimeout = 0;
+	CookieAutoClicker.ClickCookiePeriod = 4;
+	CookieAutoClicker.ClickCookie = function() {
+		Game.ClickCookie();
+		CookieAutoClicker.ClickCookieTimeout = setTimeout(ClickCookie, CookieAutoClicker.ClickCookiePeriod);
+	}
+	CookieAutoClicker.StopClickCookie() = function() {
+		clearTimeout(CookieAutoClicker.ClickCookieTimeout);
+	}
+	
+	CookieAutoClicker.ClickGoldenCookieTimeout = 0;
+	CookieAutoClicker.ClickGoldenCookiePeriod = 100;
+	CookieAutoClicker.ClickGoldenCookie = function() {
+		CookieAutoClicker.clickGoldenCookie();
+		CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(ClickGoldenCookie, CookieAutoClicker.ClickGoldenCookiePeriod);
+	}
+	CookieAutoClicker.StopClickGoldenCookie() = function() {
+		clearTimeout(CookieAutoClicker.ClickGoldenCookieTimeout);
 	}
 	
 	CookieAutoClicker.save = function() {
