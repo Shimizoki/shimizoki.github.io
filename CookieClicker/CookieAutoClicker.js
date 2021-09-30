@@ -66,13 +66,13 @@ CookieAutoClicker.launch = function() {
         }, 100)
     }
     
-    CookieAutoClicker.save = function(){
+    CookieAutoClicker.save = function() {
 	}
 
-	CookieAutoClicker.load = function(str){
+	CookieAutoClicker.load = function(str) {
 	}
     
-    CookieAutoClicker.calcBestBuilding() {
+    CookieAutoClicker.calcBestBuilding = function() {
         let bestRoi = 10000000000000;
         let bestIdx = -1;
         for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
@@ -89,7 +89,7 @@ CookieAutoClicker.launch = function() {
         return [bestIdx, bestRoi];
     }
     
-    CookieAutoClicker.calcBestUpgrade() {
+    CookieAutoClicker.calcBestUpgrade = function() {
         let bestRoi = 10000000000000;
         let bestIdx = -1;
         for(let i=0; i < Game.UpgradesInStore.length; i++) {
@@ -106,7 +106,7 @@ CookieAutoClicker.launch = function() {
         return [bestIdx, bestRoi];
     }
     
-    CookieAutoClicker.clickGoldenCookie() {
+    CookieAutoClicker.clickGoldenCookie = function() {
         for(let i = 0; i < Game.shimmers.length; i++) {
             if(Game.shimmers[i].type == 'golden') {
                 Game.shimmers[i].pop();
@@ -115,7 +115,7 @@ CookieAutoClicker.launch = function() {
         }
     }
     
-    CookieAutoClicker.calcBuildingCps(buildingId){
+    CookieAutoClicker.calcBuildingCps = function(buildingId) {
     
         let curCps = Game.cookiesPs + (Game.computedMouseCps*clicksPerSecond);
     
@@ -130,7 +130,7 @@ CookieAutoClicker.launch = function() {
         return newCps - curCps;
     }
     
-    CookieAutoClicker.calcUpgradeCps(upgradeId){
+    CookieAutoClicker.calcUpgradeCps = function(upgradeId) {
     
         let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
     
@@ -145,11 +145,11 @@ CookieAutoClicker.launch = function() {
         return newCps - curCps;
     }
     
-    CookieAutoClicker.castForceHand() {
+    CookieAutoClicker.castForceHand = function() {
         Game.ObjectsById[7].minigame.castSpell(Game.ObjectsById[7].minigame.spellsById[1],{});
     }
     
-    CookieAutoClicker.addDisplay(){
+    CookieAutoClicker.addDisplay = function(){
       const parent = document.querySelector('#versionNumber');
       let newElement = document.createElement('div');
       newElement.id = "nextPurchase";
@@ -159,7 +159,7 @@ CookieAutoClicker.launch = function() {
       parent.appendChild(newElement);
     }
     
-    CookieAutoClicker.updateDisplay(value){
+    CookieAutoClicker.updateDisplay = function(value){
         if(value == nextPurchase) { return; }
     
         let element = document.querySelector('#nextPurchase');
@@ -167,7 +167,7 @@ CookieAutoClicker.launch = function() {
         CookieAutoClicker.nextPurchase = value;
     }
     
-    CookieAutoClicker.sleep(ms) {
+    CookieAutoClicker.sleep = function(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 }
