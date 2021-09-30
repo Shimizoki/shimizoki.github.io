@@ -165,7 +165,9 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Bunny biscuit'  ||
 			   Game.UpgradesInStore[i].name == 'Chocolate egg' ||
 			   Game.UpgradesInStore[i].name == 'Golden switch [off]' ||
-			   Game.UpgradesInStore[i].name == 'Golden switch [on]' 
+			   Game.UpgradesInStore[i].name == 'Golden switch [on]' ||
+			   Game.UpgradesInStore[i].name == 'Shimmering veil [off]' ||
+			   Game.UpgradesInStore[i].name == 'Shimmering veil [on]' 
 			) {
 				deltaCps = -1;
 			}
