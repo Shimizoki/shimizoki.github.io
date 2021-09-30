@@ -87,6 +87,7 @@ CookieAutoClicker.launch = function() {
 		let cookieClicksLastCheck = Game.cookieClicks;
 		CookieAutoClicker.CalculateClicksPerSecond = function() {
 			CookieAutoClicker.clicksPerSecond = (Game.cookieClicks - cookieClicksLastCheck) / (CookieAutoClicker.CalculateClicksPerSecondPeriod / 1000);
+			cookieClicksLastCheck = Game.cookieClicks;
 			CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(CookieAutoClicker.CalculateClicksPerSecond, CookieAutoClicker.CalculateClicksPerSecondPeriod);
 		}
 	}
