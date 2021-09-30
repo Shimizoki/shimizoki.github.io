@@ -158,6 +158,15 @@ CookieAutoClicker.launch = function() {
 			let deltaCps = 0;
 			
 			
+			if(Game.UpgradesInStore[i].name == 'Festive Biscut' || 
+			   Game.UpgradesInStore[i].name == 'Ghostly Biscut' ||
+			   Game.UpgradesInStore[i].name == 'Lovesick Biscut' ||
+			   Game.UpgradesInStore[i].name == 'Fool\'s Biscut' ||
+			   Game.UpgradesInStore[i].name == 'Bunny Biscut' 
+			) {
+				deltaCps = 9999999999999999;
+			}
+			
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
 				if((Game.Upgrades['Bingo center/Research facility'].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
 					deltaCps = Game.UpgradesInStore[i].getPrice();
@@ -287,6 +296,8 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lasting fortune'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden switch'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Season switcher'].id);
+		
+		Game.Reincarnate(1);
 	}
 	
 	CookieAutoClicker.castForceHand = function() {
