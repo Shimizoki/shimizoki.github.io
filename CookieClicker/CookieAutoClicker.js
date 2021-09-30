@@ -58,7 +58,7 @@ CookieAutoClicker.launch = function() {
 				//console.log("Best Index: " + bestBuilding[0] + " with ROI: " + bestRoi);
 				if(bestBuilding[0] != -1) {
 					//console.log("Best Purchase: " + Game.ObjectsById[bestBuilding[0]].name);
-					CookieAutoClicker.updateDisplay(Game.ObjectsById[bestBuilding[0]].name);
+					CookieAutoClicker.updateDisplay(Game.ObjectsById[bestBuilding[0]].name + " (" + bestBuilding[1] + ")");
 					Game.ObjectsById[bestBuilding[0]].buy();
 				}
 			}
@@ -66,7 +66,7 @@ CookieAutoClicker.launch = function() {
 				//console.log("Best Index: " + bestUpgrade[0] + " with ROI: " + bestRoi);
 				if(bestUpgrade[0] != -1) {
 					//console.log("Best Purchase: " + Game.UpgradesInStore[bestUpgrade[0]].name);
-					CookieAutoClicker.updateDisplay(Game.UpgradesInStore[bestUpgrade[0]].name);
+					CookieAutoClicker.updateDisplay(Game.UpgradesInStore[bestUpgrade[0]].name + " (" + bestUpgrade[1] + ")");
 					if(Game.UpgradesInStore[bestUpgrade[0]].canBuy() == 1) {
 						Game.UpgradesInStore[bestUpgrade[0]].buy();
 					}
@@ -106,7 +106,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [bestIdx, bestRoi];
+		return [bestIdx, Math.round(bestRoi)];
 	}
 	
 	CookieAutoClicker.calcBestUpgrade = function() {
@@ -115,7 +115,7 @@ CookieAutoClicker.launch = function() {
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
-				deltaCps = 500;
+				deltaCps = Game.UpgradesInStore[i].getPrice() * 50000;
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
@@ -130,7 +130,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [bestIdx, bestRoi];
+		return [bestIdx, Math.round(bestRoi)];
 	}
 	
 	CookieAutoClicker.clickGoldenCookie = function() {
