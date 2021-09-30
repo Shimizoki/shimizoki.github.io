@@ -195,7 +195,7 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'One mind') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+				deltaCps = -1; Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Communal brainsweep') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
