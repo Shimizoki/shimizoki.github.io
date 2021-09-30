@@ -166,8 +166,7 @@ CookieAutoClicker.launch = function() {
 			) {
 				deltaCps = 1;
 			}
-			
-			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
+			else if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
 				if((Game.Upgrades['Bingo center/Research facility'].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
 					deltaCps = Game.UpgradesInStore[i].getPrice();
 				}
