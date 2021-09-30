@@ -7,13 +7,14 @@ CookieAutoClicker.GameVersion = '2.042';
 
 CookieAutoClicker.clicksPerSecond = 0;
 CookieAutoClicker.nextPurchase = 'UnInitialized';
+CookieAutoClicker.isLoaded = 0;
 
 CookieAutoClicker.launch = function() {
-    
 	CookieAutoClicker.init = async function() {
         'use strict';
-    
-        await CookieAutoClicker.sleep(1000);
+		
+	CookieAutoClicker.isLoaded = 1;
+		
         CookieAutoClicker.addDisplay();
         CookieAutoClicker.updateDisplay(CookieAutoClicker.nextPurchase);
     
