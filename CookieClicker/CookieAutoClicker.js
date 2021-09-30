@@ -120,7 +120,34 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Underworld ovens') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Exotic nuts') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Arcane sugar') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'One mind') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Communal brainsweep') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Elder Pact') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Lucky day') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
@@ -182,7 +209,9 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.castForceHand = function() {
-		Game.ObjectsById[7].minigame.castSpell(Game.ObjectsById[7].minigame.spellsById[1],{});
+		if(Game.ObjectsById[7].minigameLoaded) {
+			Game.ObjectsById[7].minigame.castSpell(Game.ObjectsById[7].minigame.spellsById[1],{});
+		}
 	}
 	
 	CookieAutoClicker.addDisplay = function(){
