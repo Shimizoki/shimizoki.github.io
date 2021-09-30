@@ -158,11 +158,11 @@ CookieAutoClicker.launch = function() {
 			let deltaCps = 0;
 			
 			
-			if(Game.UpgradesInStore[i].name == 'Festive Biscuit' || 
-			   Game.UpgradesInStore[i].name == 'Ghostly Biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Lovesick Biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Fool\'s Biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Bunny Biscuit' 
+			if(Game.UpgradesInStore[i].name == 'Festive biscuit' || 
+			   Game.UpgradesInStore[i].name == 'Ghostly biscuit' ||
+			   Game.UpgradesInStore[i].name == 'Lovesick biscuit' ||
+			   Game.UpgradesInStore[i].name == 'Fool\'s biscuit' ||
+			   Game.UpgradesInStore[i].name == 'Bunny biscuit' 
 			) {
 				deltaCps = -1;
 			}
