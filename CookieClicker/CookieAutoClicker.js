@@ -33,6 +33,13 @@ CookieAutoClicker.launch = function() {
 			Game.AchievementsById[204].click();
 		}
 		
+		if(Game.HasAchiev('Tabloid addiction') == 0) {
+			for(let i = 0; i < 75; i++){
+				document.querySelector("#commentsText").click();
+				CookieAutoClicker.sleep(4);
+			}
+		}
+		
 		// Interval for calculating CPS
 		CookieAutoClicker.CalculateClicksPerSecond();
 		
@@ -152,10 +159,15 @@ CookieAutoClicker.launch = function() {
 			
 			
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+				if((Game.Upgrades['Bingo center/Research facility'].getPrice() / (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) / 60 < 1) {
+					deltaCps = Game.UpgradesInStore[i].getPrice();
+				}
+				else {
+					deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
+				deltaCps = (Game.cookiesPs+Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
@@ -231,13 +243,8 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.calcUpgradeCps = function(upgradeId) {
-	
 		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
-	
-		if(Game.UpgradesInStore[upgradeId].name == 'Bingo center/Research facility') {
-			return -1;
-		}
-		
+			
 		Game.UpgradesInStore[upgradeId].earn();
 		Game.CalculateGains();
 	
@@ -247,6 +254,39 @@ CookieAutoClicker.launch = function() {
 		Game.CalculateGains();
 	
 		return newCps - curCps;
+	}
+	
+	CookieAutoClicker.calcHeavenlyChips = function() {
+		return Game.HeavenlyChips + Game.ascendMeterLevel;
+	}
+	
+	CookieAutoClicker.Ascend = function() {
+		Game.Ascend(1);
+		
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Legacy'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Twin gates of transcendence'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly cookies'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Belphegor'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Angels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['How to bake your dragon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Classic dairy selection'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Tin of butter cookies'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Tin of british tea biscuts'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of brand biscuts'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of macarons'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Mammon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Archangels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kit'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly luck'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heralds'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Basic wallpaper assortment'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abbadon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Virtues'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Persistent memory'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lasting fortune'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden switch'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Season switcher'].id);
 	}
 	
 	CookieAutoClicker.castForceHand = function() {
