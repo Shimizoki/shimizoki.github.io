@@ -1,5 +1,5 @@
 if(CookieAutoClicker === undefined) var CookieAutoClicker = {};
-if(typeof CCSE == 'undefined') Game.LoadMod('https://klattmose.github.io/CookieClicker/' + (0? 'Beta/' : '') + 'CCSE.js');
+//if(typeof CCSE == 'undefined') Game.LoadMod('https://klattmose.github.io/CookieClicker/' + (0? 'Beta/' : '') + 'CCSE.js');
 CookieAutoClicker.name = 'CookieAutoClicker';
 CookieAutoClicker.version = '0.1';
 CookieAutoClicker.GameVersion = '2.042';
@@ -172,19 +172,21 @@ CookieAutoClicker.launch = function() {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 	
-	if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
+	//if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
+	Game.registerMod(CookieAutoClicker.name, CookieAutoClicker);
 }
 
 if(!CookieAutoClicker.isLoaded){
-	console.log("CookieAutoClicker Not Loaded!");
-    if(CCSE && CCSE.isLoaded){
-		console.log("CCSE is Loaded... Launcing CookieAutoClicker");
-    	CookieAutoClicker.launch();
-    }
-    else{
-		console.log("CCSE is not Loaded... Adding CookieAutoClicker to post load hooks");
-    	if(!CCSE) var CCSE = {};
-    	if(!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
-    	CCSE.postLoadHooks.push(CookieAutoClicker.launch);
-    }
+	CookieAutoClicker.launch();
+	//console.log("CookieAutoClicker Not Loaded!");
+    //if(CCSE && CCSE.isLoaded){
+	//	console.log("CCSE is Loaded... Launcing CookieAutoClicker");
+    //	CookieAutoClicker.launch();
+    //}
+    //else{
+	//	console.log("CCSE is not Loaded... Adding CookieAutoClicker to post load hooks");
+    //	if(!CCSE) var CCSE = {};
+    //	if(!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
+    //	CCSE.postLoadHooks.push(CookieAutoClicker.launch);
+    //}
 }
