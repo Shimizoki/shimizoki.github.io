@@ -29,7 +29,7 @@ CookieAutoClicker.launch = function() {
     
             let autoCps = Game.cookiesPs;
             let clickCps = cps - autoCps;
-            clicksPerSecond = Math.round(clickCps / Game.computedMouseCps);
+            CookieAutoClicker.clicksPerSecond = Math.round(clickCps / Game.computedMouseCps);
     
             //console.log("CPS: " + cps + " | Click CPS" + clickCps + " | Clicks Per Second " + clicksPerSecond);
         }, 1000)
