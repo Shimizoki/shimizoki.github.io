@@ -91,9 +91,18 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.CalculateClicksPerSecondPeriod = 100;
 	{
 		let cookieClicksLastCheck = Game.cookieClicks;
+		let cookieClicksList = [Game.cookieClicks, Game.cookieClicks, Game.cookieClicks, Game.cookieClicks, Game.cookieClicks];
+		let cookieClicksListIndex = 0;
 		CookieAutoClicker.CalculateClicksPerSecond = function() {
-			CookieAutoClicker.clicksPerSecond = (Game.cookieClicks - cookieClicksLastCheck) / (CookieAutoClicker.CalculateClicksPerSecondPeriod / 1000);
-			cookieClicksLastCheck = Game.cookieClicks;
+			cookieClicksList[cookieClicksListIndex] = (Game.cookieClicks - cookieClicksLastCheck) / (CookieAutoClicker.CalculateClicksPerSecondPeriod / 1000);
+			cookieClicksListIndex = (cookieClicksListIndex+1)%cookieClicksList.Count;
+			
+			let sum = 0;
+			for (let i = 0; i < cookieClicksList.Count; i++) {
+				sum += cookieClicksList[i];
+			}
+			
+			CookieAutoClicker.clicksPerSecond = sum / cookieClicksList.Count;
 			CookieAutoClicker.ClickGoldenCookieTimeout = setTimeout(CookieAutoClicker.CalculateClicksPerSecond, CookieAutoClicker.CalculateClicksPerSecondPeriod);
 		}
 	}
@@ -175,6 +184,9 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Serendipity') {
+				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+			}
+			else if(Game.UpgradesInStore[i].name == 'Get lucky') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
 			}
 			else {
