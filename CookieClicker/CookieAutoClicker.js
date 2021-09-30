@@ -13,7 +13,8 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.init = async function() {
         'use strict';
 		
-	CookieAutoClicker.isLoaded = 1;
+		console.log("Launching CookieAutoClicker!");
+        CookieAutoClicker.isLoaded = 1;
 		
         CookieAutoClicker.addDisplay();
         CookieAutoClicker.updateDisplay(CookieAutoClicker.nextPurchase);
