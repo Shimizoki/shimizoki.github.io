@@ -149,7 +149,7 @@ CookieAutoClicker.launch = function() {
 		let bestIdx = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
-			let deltaCps = CookieAutoClicker.calcPurchaseCps(i);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps(Game.ObjectsById[i].name);
 			
 			if(Game.ObjectsById[i].locked == 0 && deltaCps != 0) {
 				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
@@ -168,44 +168,45 @@ CookieAutoClicker.launch = function() {
 		let bestIdx = -1;
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
+			let itemName = Game.UpgradesInStore[i].name;
 			
-			if(Game.UpgradesInStore[i].name == 'Festive biscuit' || 
-			   Game.UpgradesInStore[i].name == 'Ghostly biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Lovesick biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Fool\'s biscuit' ||
-			   Game.UpgradesInStore[i].name == 'Bunny biscuit'  ||
-			   Game.UpgradesInStore[i].name == 'Chocolate egg' ||
-			   Game.UpgradesInStore[i].name == 'Golden switch [off]' ||
-			   Game.UpgradesInStore[i].name == 'Golden switch [on]' ||
-			   Game.UpgradesInStore[i].name == 'Shimmering veil [off]' ||
-			   Game.UpgradesInStore[i].name == 'Shimmering veil [on]' 
+			if(itemName == 'Festive biscuit' || 
+			   itemName == 'Ghostly biscuit' ||
+			   itemName == 'Lovesick biscuit' ||
+			   itemName == 'Fool\'s biscuit' ||
+			   itemName == 'Bunny biscuit'  ||
+			   itemName == 'Chocolate egg' ||
+			   itemName == 'Golden switch [off]' ||
+			   itemName == 'Golden switch [on]' ||
+			   itemName == 'Shimmering veil [off]' ||
+			   itemName == 'Shimmering veil [on]' 
 			) {
 				continue;
 			}
 			
-			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name);
-			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name, false);
+			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(itemName);
+			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, false);
 			
 			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
-				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Underworld ovens') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Exotic nuts') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Arcane sugar') {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(Game.UpgradesInStore[i].name == 'One mind') {
 				deltaCps = -1; //Game.UpgradesInStore[i].getPrice() / 50000;
@@ -229,7 +230,7 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice();
 			}
 			else {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			
 			if(deltaCps > 0) {
@@ -254,7 +255,7 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.calcPurchaseCps = function(itemName) {
-		let item = Game.UpgradesInStore[itemIdx] ? Game.UpgradesInStore[itemIdx] : Game.ObjectsById[itemIdx];
+		let item = Game.Upgrades[itemName] ? Game.Upgrades[itemName] : Game.Objects[itemName];
 		
 		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
 	
