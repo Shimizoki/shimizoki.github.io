@@ -181,10 +181,7 @@ CookieAutoClicker.launch = function() {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name);
 			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name, false);
 			
-			if(secondsOfCps < 10) {
-				deltaCps = Game.UpgradesInStore[i].getPrice();
-			}
-			else if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
+			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
@@ -222,6 +219,9 @@ CookieAutoClicker.launch = function() {
 			}
 			else if(Game.UpgradesInStore[i].name == 'Get lucky') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
+			}
+			else if(secondsOfCps < 10) {
+				deltaCps = Game.UpgradesInStore[i].getPrice();
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
