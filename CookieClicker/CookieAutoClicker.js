@@ -47,6 +47,10 @@ CookieAutoClicker.launch = function() {
 		CookieAutoClicker.ClickCookie();
 		CookieAutoClicker.ClickGoldenCookie();
 	
+		setInterval(() => {
+			CookieAutoClicker.TryDoPrestige();
+		}, 100)
+		
 		// Interval for buying Buildings and Upgrades
 		setInterval(()=>{
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
@@ -279,38 +283,76 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.calcHeavenlyChips = function() {
-		return Game.HeavenlyChips + Game.ascendMeterLevel;
+		return Game.prestige + Game.ascendMeterLevel;
 	}
 	
-	CookieAutoClicker.Ascend = function() {
+	CookieAutoClicker.Ascend = async function() {
 		Game.Ascend(1);
 		
+		// 1st
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Legacy'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Twin gates of transcendence'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly cookies'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Belphegor'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['How to bake your dragon'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Classic dairy selection'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Tin of butter cookies'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Tin of british tea biscuts'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of brand biscuts'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Tin of british tea biscuits'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of brand biscuits'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of macarons'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Mammon'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Archangels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kit'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly luck'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
+			await CookieAutoClicker.sleep(500);
+			Game.PutUpgradeInPermanentSlot(8,0);
+			await CookieAutoClicker.sleep(500);
+			document.querySelector('#promptOption0').click();
+			await CookieAutoClicker.sleep(500);
+		
+		
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heralds'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Basic wallpaper assortment'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abbadon'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Virtues'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Persistent memory'].id);
+		
+		// 2nd
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lasting fortune'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden switch'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Season switcher'].id);
 		
+		// 3rd
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Classic dairy selection'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Basic wallpaper assortment'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Persistent memory'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucky digit'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Twin Gates of Transcendence'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Belphegor'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Angels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Mammon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Archangels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abbadon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Virtues'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Dominions'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten Angels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
+			await CookieAutoClicker.sleep(500);
+			Game.PutUpgradeInPermanentSlot(8,0);
+			await CookieAutoClicker.sleep(500);
+			document.querySelector('#promptOption0').click();
+			await CookieAutoClicker.sleep(500);
+		
 		Game.Reincarnate(1);
+	}
+	
+	{
+		let hcBreakpoints = [];
+		let nextBreakpointIdx = 0;
+		for(let i = 0; i < hcBreakpoints.Count; i++) {
+			if(Game.prestige < hcBreakpoints[i]){
+				nextBreakpointIdx = i;
+				break;
+			}
+		}
+		CookieAutoClicker.TryDoPrestige(){
+			if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
+				CookieAutoClicker.Ascend();
+				nextBreakpointIdx++;
+			}
+		}
 	}
 	
 	CookieAutoClicker.CalculateGains=function(newUpgrade)
