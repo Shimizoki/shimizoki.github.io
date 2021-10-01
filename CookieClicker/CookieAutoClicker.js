@@ -149,7 +149,8 @@ CookieAutoClicker.launch = function() {
 		let bestIdx = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
-			let deltaCps = CookieAutoClicker.calcBuildingCps(i);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps(i);
+			
 			if(Game.ObjectsById[i].locked == 0 && deltaCps != 0) {
 				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
 				if(roi < bestRoi) {
@@ -228,7 +229,7 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice();
 			}
 			else {
-				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
+				deltaCps = CookieAutoClicker.calcPurchaseCps(i);
 			}
 			
 			if(deltaCps > 0) {
@@ -262,26 +263,7 @@ CookieAutoClicker.launch = function() {
 	
 		return newCps - curCps;
 	}
-	
-	CookieAutoClicker.calcBuildingCps = function(buildingId) {
-	
-		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
-	
-		let gains = CookieAutoClicker.CalculateGains(Game.ObjectsById[buildingId].name);
-		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
-	
-		return newCps - curCps;
-	}
-	
-	CookieAutoClicker.calcUpgradeCps = function(upgradeId) {
-		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
-			
-		let gains = CookieAutoClicker.CalculateGains(Game.UpgradesInStore[upgradeId].name);
-		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
 		
-		return newCps - curCps;
-	}
-	
 	CookieAutoClicker.calcHeavenlyChips = function() {
 		return Game.prestige + Game.ascendMeterLevel;
 	}
@@ -341,9 +323,9 @@ CookieAutoClicker.launch = function() {
 	{
 		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661];
 		let nextBreakpointIdx = 0;
-		for(let i = 0; i < hcBreakpoints.Count; i++) {
+		for(let i = 0; i < hcBreakpoints.length; i++) {
 			if(Game.prestige < hcBreakpoints[i]){
-				nextBreakpointIdx = i+1;
+				nextBreakpointIdx = i;
 				break;
 			}
 		}
@@ -690,7 +672,7 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.sleep = function(ms) {
-	  return new Promise(resolve => setTimeout(resolve, ms));
+		  return new Promise(resolve => setTimeout(resolve, ms));
 	}
 	
 	//if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
