@@ -133,11 +133,11 @@ CookieAutoClicker.launch = function() {
 		CookieAutoClicker.config = CookieAutoClicker.defaultConfig();
 	}
 
-	CookieAutoClicker.calcPurchaseInSeconds = function(item) {
+	CookieAutoClicker.calcPurchaseInSeconds = function(item, useBank=true) {
 		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].price;
-		let cps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond));
+		let cps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
 		
-		return Math.max(0, (price-Game.cookies) / cps);
+		return Math.max(0, (price-(useBank?Game.cookies:0)) / cps);
 	}
 	
 	CookieAutoClicker.calcBestBuilding = function() {
@@ -163,7 +163,6 @@ CookieAutoClicker.launch = function() {
 		let bestIdx = -1;
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
-			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name);
 			
 			if(Game.UpgradesInStore[i].name == 'Festive biscuit' || 
 			   Game.UpgradesInStore[i].name == 'Ghostly biscuit' ||
@@ -176,38 +175,35 @@ CookieAutoClicker.launch = function() {
 			   Game.UpgradesInStore[i].name == 'Shimmering veil [off]' ||
 			   Game.UpgradesInStore[i].name == 'Shimmering veil [on]' 
 			) {
-				deltaCps = -1;
+				continue;
+			}
+			
+			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name);
+			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name, false);
+			
+			if(secondsOfCps < 10) {
+				deltaCps = Game.UpgradesInStore[i].getPrice();
 			}
 			else if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
-				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond))) / 60 < 1) {
-					deltaCps = Game.UpgradesInStore[i].getPrice();
-				}
-				else {
-					deltaCps = CookieAutoClicker.calcUpgradeCps(i);
-				}
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
-				deltaCps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.01;
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
-				deltaCps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond)) * 0.02;
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
-				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond))) / 60 < 1) {
-					deltaCps = Game.UpgradesInStore[i].getPrice();
-				}
-				else {
-					deltaCps = Game.UpgradesInStore[i].getPrice() / 20000;
-				}
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Underworld ovens') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Exotic nuts') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'Arcane sugar') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 5000;
+				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 			}
 			else if(Game.UpgradesInStore[i].name == 'One mind') {
 				deltaCps = -1; //Game.UpgradesInStore[i].getPrice() / 50000;
@@ -219,28 +215,13 @@ CookieAutoClicker.launch = function() {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Lucky day') {
-				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond))) / 60 < 1) {
-					deltaCps = Game.UpgradesInStore[i].getPrice();
-				}
-				else {
-					deltaCps = -1;
-				}
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Serendipity') {
-				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond))) / 60 < 1) {
-					deltaCps = Game.UpgradesInStore[i].getPrice();
-				}
-				else {
-					deltaCps = -1;
-				}
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
 			else if(Game.UpgradesInStore[i].name == 'Get lucky') {
-				if((Game.UpgradesInStore[i].getPrice() / (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond))) / 60 < 1) {
-					deltaCps = Game.UpgradesInStore[i].getPrice();
-				}
-				else {
-					deltaCps = -1;
-				}
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcUpgradeCps(i);
