@@ -347,7 +347,7 @@ CookieAutoClicker.launch = function() {
 				break;
 			}
 		}
-		CookieAutoClicker.TryDoPrestige(){
+		CookieAutoClicker.TryDoPrestige = function() {
 			if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
 				CookieAutoClicker.Ascend();
 				nextBreakpointIdx++;
