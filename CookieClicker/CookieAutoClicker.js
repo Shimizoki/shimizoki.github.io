@@ -137,7 +137,7 @@ CookieAutoClicker.launch = function() {
 		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].price;
 		let cps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond));
 		
-		return Math.min(0, (price-Game.cookies) / cps);
+		return Math.max(0, (price-Game.cookies) / cps);
 	}
 	
 	CookieAutoClicker.calcBestBuilding = function() {
