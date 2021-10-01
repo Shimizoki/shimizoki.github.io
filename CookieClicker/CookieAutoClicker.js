@@ -285,7 +285,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly luck'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(8,0);
+			Game.PutUpgradeInPermanentSlot(187,0);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
@@ -306,7 +306,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Mammon'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Archangels'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abbadon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abaddon'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Virtues'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Dominions'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten Angels'].id);
