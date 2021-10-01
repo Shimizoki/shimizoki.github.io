@@ -339,7 +339,7 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	{
-		let hcBreakpoints = [];
+		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661];
 		let nextBreakpointIdx = 0;
 		for(let i = 0; i < hcBreakpoints.Count; i++) {
 			if(Game.prestige < hcBreakpoints[i]){
