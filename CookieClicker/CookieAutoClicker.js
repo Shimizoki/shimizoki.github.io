@@ -133,6 +133,12 @@ CookieAutoClicker.launch = function() {
 		CookieAutoClicker.config = CookieAutoClicker.defaultConfig();
 	}
 
+	CookieAutoClicker.calcPurchaseInSeconds = function(item) {
+		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].price;
+		let cps = (Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond));
+		
+		return Math.min(0, (price-Game.cookies) / cps);
+	}
 	
 	CookieAutoClicker.calcBestBuilding = function() {
 		let bestRoi = 10000000000000;
@@ -176,7 +182,7 @@ CookieAutoClicker.launch = function() {
 					deltaCps = Game.UpgradesInStore[i].getPrice();
 				}
 				else {
-					deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+					deltaCps = CookieAutoClicker.calcUpgradeCps(i);
 				}
 			}
 			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
