@@ -288,6 +288,7 @@ CookieAutoClicker.launch = function() {
 	
 	CookieAutoClicker.Ascend = async function() {
 		Game.Ascend(1);
+		await CookieAutoClicker.sleep(2000);
 		
 		// 1st
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Legacy'].id);
@@ -300,13 +301,11 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kit'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly luck'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
-			await CookieAutoClicker.sleep(500);
+			await CookieAutoClicker.sleep(1000);
 			Game.PutUpgradeInPermanentSlot(8,0);
-			await CookieAutoClicker.sleep(500);
+			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
-			await CookieAutoClicker.sleep(500);
-		
-		
+			await CookieAutoClicker.sleep(1000);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heralds'].id);
 		
 		// 2nd
@@ -329,13 +328,14 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Dominions'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten Angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
-			await CookieAutoClicker.sleep(500);
+			await CookieAutoClicker.sleep(1000);
 			Game.PutUpgradeInPermanentSlot(8,0);
-			await CookieAutoClicker.sleep(500);
+			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
-			await CookieAutoClicker.sleep(500);
+			await CookieAutoClicker.sleep(1000);
 		
 		Game.Reincarnate(1);
+		await CookieAutoClicker.sleep(2000);
 	}
 	
 	{
