@@ -349,8 +349,9 @@ CookieAutoClicker.launch = function() {
 		}
 		CookieAutoClicker.TryDoPrestige = function() {
 			if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
-				CookieAutoClicker.Ascend();
-				nextBreakpointIdx++;
+				console.log("Attempting to Prestige at :" + CookieAutoClicker.calcHeavenlyChips() +" / "+ hcBreakpoints[nextBreakpointIdx])
+				//CookieAutoClicker.Ascend();
+				//nextBreakpointIdx++;
 			}
 		}
 	}
