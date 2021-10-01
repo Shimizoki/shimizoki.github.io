@@ -343,15 +343,20 @@ CookieAutoClicker.launch = function() {
 		let nextBreakpointIdx = 0;
 		for(let i = 0; i < hcBreakpoints.Count; i++) {
 			if(Game.prestige < hcBreakpoints[i]){
-				nextBreakpointIdx = i;
+				nextBreakpointIdx = i+1;
 				break;
 			}
 		}
 		CookieAutoClicker.TryDoPrestige = function() {
-			if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
-				console.log("Attempting to Prestige at :" + CookieAutoClicker.calcHeavenlyChips() +" / "+ hcBreakpoints[nextBreakpointIdx])
-				//CookieAutoClicker.Ascend();
-				//nextBreakpointIdx++;
+			if(nextBreakpointIdx >= hcBreakpoints.Count) {
+				if(Game.ascendMeterLevel >= Game.prestige){
+					CookieAutoClicker.Ascend();
+				}
+			}
+			else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
+				//console.log("Attempting to Prestige at :" + CookieAutoClicker.calcHeavenlyChips() +" / "+ hcBreakpoints[nextBreakpointIdx])
+				CookieAutoClicker.Ascend();
+				nextBreakpointIdx++;
 			}
 		}
 	}
