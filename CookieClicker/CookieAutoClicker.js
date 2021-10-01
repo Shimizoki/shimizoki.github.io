@@ -144,9 +144,10 @@ CookieAutoClicker.launch = function() {
 		let bestRoi = 10000000000000;
 		let bestIdx = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
+			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
 			let deltaCps = CookieAutoClicker.calcBuildingCps(i);
 			if(Game.ObjectsById[i].locked == 0 && deltaCps != 0) {
-				let roi = Game.ObjectsById[i].price / deltaCps;
+				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
 				if(roi < bestRoi) {
 					bestRoi = roi;
 					bestIdx = i;
@@ -162,7 +163,7 @@ CookieAutoClicker.launch = function() {
 		let bestIdx = -1;
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
-			
+			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.UpgradesInStore[i].name);
 			
 			if(Game.UpgradesInStore[i].name == 'Festive biscuit' || 
 			   Game.UpgradesInStore[i].name == 'Ghostly biscuit' ||
@@ -246,7 +247,7 @@ CookieAutoClicker.launch = function() {
 			}
 			
 			if(deltaCps > 0) {
-				let roi = Game.UpgradesInStore[i].getPrice() / deltaCps;
+				let roi = timeToBuy + (Game.UpgradesInStore[i].getPrice() / deltaCps);
 				if(roi < bestRoi) {
 					bestRoi = roi;
 					bestIdx = i;
@@ -264,6 +265,17 @@ CookieAutoClicker.launch = function() {
 				CookieAutoClicker.castForceHand();
 			}
 		}
+	}
+	
+	CookieAutoClicker.calcPurchaseCps = function(itemName) {
+		let item = Game.UpgradesInStore[itemIdx] ? Game.UpgradesInStore[itemIdx] : Game.ObjectsById[itemIdx];
+		
+		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
+	
+		let gains = CookieAutoClicker.CalculateGains(item.name);
+		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
+	
+		return newCps - curCps;
 	}
 	
 	CookieAutoClicker.calcBuildingCps = function(buildingId) {
