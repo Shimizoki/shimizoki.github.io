@@ -180,7 +180,7 @@ CookieAutoClicker.launch = function() {
 	
 	CookieAutoClicker.calcBestBuilding = function() {
 		let bestRoi = 1000000000000000000000000000;
-		let bestIdx = -1;
+		let bestId = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
 			let deltaCps = CookieAutoClicker.calcPurchaseCps(Game.ObjectsById[i].name);
@@ -189,7 +189,7 @@ CookieAutoClicker.launch = function() {
 				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
 				if(roi < bestRoi) {
 					bestRoi = roi;
-					bestIdx = i;
+					bestId = Game.ObjectsById[i].id;
 				}
 			}
 		}
@@ -248,7 +248,7 @@ CookieAutoClicker.launch = function() {
 	
 	CookieAutoClicker.calcBestUpgrade = function() {
 		let bestRoi = 1000000000000000000000000000;
-		let bestIdx = -1;
+		let bestId = -1;
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
 			let itemName = Game.UpgradesInStore[i].name;
@@ -323,12 +323,12 @@ CookieAutoClicker.launch = function() {
 				let roi = timeToBuy + (Game.UpgradesInStore[i].getPrice() / deltaCps);
 				if(roi < bestRoi) {
 					bestRoi = roi;
-					bestIdx = i;
+					bestId = Game.UpgradesInStore[i].id;
 				}
 			}
 		}
 	
-		return [Game.UpgradesInStore[i].name, Math.round(bestRoi)];
+		return [Game.UpgradesById[bestId].name, Math.round(bestRoi)];
 	}
 	
 	CookieAutoClicker.clickGoldenCookie = function() {
