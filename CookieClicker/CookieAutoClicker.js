@@ -563,24 +563,30 @@ CookieAutoClicker.launch = function() {
 		return null;
 	}
 	
-	let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661, 17330992, 29644743, 107777777, 347776126, 1247776126, 4247776126,
-			     15358887236, 45914442761, 132692220538, 515692220538, 848692220538, 1337247776092, 2237247776092];
-	let nextBreakpointIdx = 0;
-	for(let i = hcBreakpoints.length-1; i >= 0; i--) {
-		if(Game.prestige > hcBreakpoints[i]){
-			nextBreakpointIdx = i+1;
-			break;
-		}
-	}
-	CookieAutoClicker.TryDoPrestige = function() {
-		if(nextBreakpointIdx >= hcBreakpoints.Count) {
-			if(Game.ascendMeterLevel >= Game.prestige){
-				CookieAutoClicker.Ascend();
+	{	
+		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661, 17330992, 29644743, 107777777, 347776126, 1247776126, 4247776126,
+				     15358887236, 45914442761, 132692220538, 515692220538, 848692220538, 1337247776092, 2237247776092];
+		let nextBreakpointIdx = 0;
+		for(let i = hcBreakpoints.length-1; i >= 0; i--) {
+			if(Game.prestige > hcBreakpoints[i]){
+				nextBreakpointIdx = i+1;
+				break;
 			}
 		}
-		else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
-			CookieAutoClicker.Ascend();
-			nextBreakpointIdx++;
+		CookieAutoClicker.TryDoPrestige = function() {
+			console.log('Trying to Prestige')
+			if(nextBreakpointIdx >= hcBreakpoints.Count) {
+				console.log('No more Breakpoints')
+				if(Game.ascendMeterLevel >= Game.prestige){
+					console.log('Doubled my Chips')
+					CookieAutoClicker.Ascend();
+				}
+			}
+			else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
+				console.log('Breakpoint Hit')
+				CookieAutoClicker.Ascend();
+				nextBreakpointIdx++;
+			}
 		}
 	}
 	
