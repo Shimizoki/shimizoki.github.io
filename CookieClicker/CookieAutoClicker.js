@@ -393,17 +393,58 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(685,0);
+			Game.PutUpgradeInPermanentSlot(685,1);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
+		
+		// 4th
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Satan'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kitchen'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Decisive fate'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden cookie alert sounds'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Unholy bait'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Halo gloves'].id);
+ 
+		// 5th
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucky number'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Residual luck'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy vol I'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Elder spice'].id);
+ 
+		// 6th
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Cherubim'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Asmodeus'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Divine sales'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Divine discount'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Seraphim'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Beelzebub'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Divine bakeries'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy vol II'].id);
+
+		// 7th
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sacrilegious corruption'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starspawn'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starsnow'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starterror'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starlove'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Startrade'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Five-finger discount'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Inspired checklist'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot III'].id);
+			await CookieAutoClicker.sleep(1000);
+			Game.PutUpgradeInPermanentSlot(54,2);
+			await CookieAutoClicker.sleep(1000);
+			document.querySelector('#promptOption0').click();
+			await CookieAutoClicker.sleep(1000);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Distilled essence of redoubled luck'].id);
 		
 		Game.Reincarnate(1);
 		await CookieAutoClicker.sleep(2000);
 	}
 	
 	{
-		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661];
+		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661, 17330992];
 		let nextBreakpointIdx = 0;
 		for(let i = 0; i < hcBreakpoints.length; i++) {
 			if(Game.prestige < hcBreakpoints[i]){
