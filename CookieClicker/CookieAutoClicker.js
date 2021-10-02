@@ -711,12 +711,23 @@ CookieAutoClicker.launch = function() {
 			CookieAutoClicker.nextPurchase = newPurchase;
 		}
 		
-		document.querySelector('#timerBar').textContent = "Million: " + (Math.round(CookieAutoClicker.millionCookiesTimer/600)/100) + "m | HC: " + 
-			(Math.round(CookieAutoClicker.firstHCTimer/36000)/100) + "h | Ascend: " + (Math.round(CookieAutoClicker.firstAscendTimer/36000)/100) + "h";
+		document.querySelector('#timerBar').textContent = "Million: " + CookieAutoClicker.msToTime(CookieAutoClicker.millionCookiesTimer) + 
+			" | HC: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstHCTimer) + 
+			" | Ascend: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstAscendTimer);
 	}
 	
 	CookieAutoClicker.sleep = function(ms) {
 		  return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
+	CookieAutoClicker.msToTime = function(ms) {
+		let seconds = Math.floor(ms / 1000)%60;
+		let minutes = Math.floor(ms / 60000);
+		let hours = Math.floor(ms / 3600000);
+		let days = Math.floor(ms / 86400000);
+		let years = Math.floor(ms / 31536000000);
+		
+		return (years==0?"":(years + "y ")) + (days==0?"":(days%365 + "d ")) + (hours==0?"":(hours%24 + "h ")) + (minutes==0?"":(minutes%60 + "m ")) + seconds + "s";
 	}
 	
 	//if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
