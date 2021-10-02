@@ -79,7 +79,7 @@ CookieAutoClicker.launch = function() {
 	
 		setInterval(() => {
 			CookieAutoClicker.TryDoPrestige();
-		}, 5000)
+		}, 10000)
 		
 		
 		let fortunes = 0;
