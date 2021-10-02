@@ -574,16 +574,12 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 		CookieAutoClicker.TryDoPrestige = function() {
-			console.log('Trying to Prestige (' + (nextBreakpointIdx+1) + "/" + hcBreakpoints.length + ")")
-			if(nextBreakpointIdx >= hcBreakpoints.Count) {
-				console.log('No more Breakpoints')
+			if(nextBreakpointIdx >= hcBreakpoints.length) {
 				if(Game.ascendMeterLevel >= Game.prestige){
-					console.log('Doubled my Chips')
 					CookieAutoClicker.Ascend();
 				}
 			}
 			else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
-				console.log('Breakpoint Hit')
 				CookieAutoClicker.Ascend();
 				nextBreakpointIdx++;
 			}
