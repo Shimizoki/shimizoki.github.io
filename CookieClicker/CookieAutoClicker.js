@@ -86,19 +86,19 @@ CookieAutoClicker.launch = function() {
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
 			let bestUpgrade = CookieAutoClicker.calcBestUpgrade();
 	
-			if(bestBuilding[1] <= bestUpgrade[1]){
+			if(bestBuilding[1] < bestUpgrade[1]){
 				//console.log("Best Index: " + bestBuilding[0] + " with ROI: " + bestRoi);
 				if(bestBuilding[0] != null) {
 					//console.log("Best Purchase: " + Game.ObjectsById[bestBuilding[0]].name);
-					CookieAutoClicker.updateDisplay(bestBuilding[0] + " (" + bestBuilding[1] + ")");
+					CookieAutoClicker.updateDisplay(bestBuilding[0] + " (" + Math.round(bestBuilding[1]) + ")");
 					Game.Objects[bestBuilding[0]].buy();
 				}
 			}
-			else if(bestUpgrade[1] < bestBuilding[1]){
+			else {
 				//console.log("Best Index: " + bestUpgrade[0] + " with ROI: " + bestRoi);
 				if(bestUpgrade[0] != null) {
 					//console.log("Best Purchase: " + Game.UpgradesInStore[bestUpgrade[0]].name);
-					CookieAutoClicker.updateDisplay(bestUpgrade[0] + " (" + bestUpgrade[1] + ")");
+					CookieAutoClicker.updateDisplay(bestUpgrade[0] + " (" + Math.round(bestUpgrade[1]) + ")");
 					if(Game.Upgrades[bestUpgrade[0]].canBuy() == 1) {
 						Game.Upgrades[bestUpgrade[0]].buy();
 					}
@@ -194,7 +194,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [Game.ObjectsById[bestId].name, Math.round(bestRoi)];
+		return [Game.ObjectsById[bestId].name, bestRoi];
 	}
 	
 	CookieAutoClicker.calcBestBuildingStacked = function() {
@@ -243,7 +243,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [bestObj.name, Math.round(bestObj.roi)];
+		return [bestObj.name, bestObj.roi];
 	}
 	
 	CookieAutoClicker.calcBestUpgrade = function() {
@@ -328,7 +328,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [(bestId != -1)?Game.UpgradesById[bestId].name:null, Math.round(bestRoi)];
+		return [(bestId != -1)?Game.UpgradesById[bestId].name:null, bestRoi];
 	}
 	
 	CookieAutoClicker.clickGoldenCookie = function() {
