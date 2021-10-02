@@ -445,11 +445,11 @@ CookieAutoClicker.launch = function() {
 		// 10th - 240,353,606 - Total HC: 347,776,126 - 42.063 undecillion
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Chimera'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Eye of the wrinkler'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Stevia caelestis'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Stevia Caelestis'].id);
 
 		// 11th - 900M - Total HC: 1,247,776,126 - 1.9427 duodecillion
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar baking'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Diabetica daemonicus'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Diabetica Daemonicus'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot IV'].id);
 		if(Game.Has('Permanent upgrade slot IV')){
 			await CookieAutoClicker.sleep(1000);
@@ -462,7 +462,7 @@ CookieAutoClicker.launch = function() {
 		// 12th - 3B - Total HC: 4,247,776,126 - 76.645 duodecillion
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar craving'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar aging process'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sucralosia inutilis'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sucralosia Inutilis'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar crystal cookies'].id);
 
 		// 13th - 11,111,111,110 - Total HC: 15,358,887,236 - 3.6231 tredecillion
@@ -499,7 +499,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of maybe cookies'].id);
 
 		// 19th - 900B - Total HC: 2,237,247,776,092 - 11.198 quindecillion
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Milkhelp lactose intolerance relief tablets'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Milkhelp&reg; lactose intolerance relief tablets'].id);
 		
 		Game.Reincarnate(1);
 		await CookieAutoClicker.sleep(2000);
