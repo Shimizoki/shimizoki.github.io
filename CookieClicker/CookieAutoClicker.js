@@ -368,9 +368,9 @@ CookieAutoClicker.launch = function() {
 		if(Game.Has('Permanent upgrade slot I')){
 			await CookieAutoClicker.sleep(1000);
 			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.calcBestKittenUpgrade()].id,0);
-			await CookieAutoClicker.sleep(1000);
+			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
-			await CookieAutoClicker.sleep(1000);
+			await CookieAutoClicker.sleep(500);
 		}
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heralds'].id);
 		
@@ -397,9 +397,9 @@ CookieAutoClicker.launch = function() {
 		if(Game.Has('Permanent upgrade slot II')){
 			await CookieAutoClicker.sleep(1000);
 			Game.PutUpgradeInPermanentSlot(0,1);
-			await CookieAutoClicker.sleep(1000);
+			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
-			await CookieAutoClicker.sleep(1000);
+			await CookieAutoClicker.sleep(500);
 		}
 		
 		// 4th
@@ -436,11 +436,13 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Five-finger discount'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Inspired checklist'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot III'].id);
+		if(Game.Has('Permanent upgrade slot III')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(54,2);
-			await CookieAutoClicker.sleep(1000);
+			Game.PutUpgradeInPermanentSlot(1,2);
+			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
-			await CookieAutoClicker.sleep(1000);
+			await CookieAutoClicker.sleep(500);
+		}
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Distilled essence of redoubled luck'].id);
 		
 		Game.Reincarnate(1);
