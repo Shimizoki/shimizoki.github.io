@@ -262,7 +262,10 @@ CookieAutoClicker.launch = function() {
 			   itemName == 'Golden switch [off]' ||
 			   itemName == 'Golden switch [on]' ||
 			   itemName == 'Shimmering veil [off]' ||
-			   itemName == 'Shimmering veil [on]' 
+			   itemName == 'Shimmering veil [on]' ||
+			   itemName == 'Golden cookie sound selector' ||
+			   itemName == 'Background selector' ||
+			   itemName == 'Milk selector'
 			) {
 				continue;
 			}
