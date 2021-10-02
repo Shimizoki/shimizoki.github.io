@@ -84,7 +84,7 @@ CookieAutoClicker.launch = function() {
 		
 		let fortunes = 0;
 		for(let i in Game.Tiers['fortune'].upgrades) {
-			if (Game.Has(list[i].name) == 0) {
+			if (Game.Has(Game.Tiers['fortune'].upgrades[i].name) == 0) {
 				let fortuneInterval = setInterval(() => {
 					if(Game.Has(Game.Upgrades['Fortune cookies'])) {
 						if(document.querySelector('.fortune')) {
@@ -92,15 +92,16 @@ CookieAutoClicker.launch = function() {
 
 							fortunes = 0;
 							for(let i in Game.Tiers['fortune'].upgrades) {
-								if (Game.Has(list[i].name)){ fortunes++; }
+								if (Game.Has(Game.Tiers['fortune'].upgrades.name)) { fortunes++; }
 							}
 
 							if (fortunes >= list.length) { clearInterval(fortuneInterval); }
 						}
 					}
-				}
+				}, 9000);
+				break;
 			}	
-		}, 9000);
+		}
 		
 		// Interval for buying Buildings and Upgrades
 		setInterval(()=>{
