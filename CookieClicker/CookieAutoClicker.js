@@ -352,7 +352,7 @@ CookieAutoClicker.launch = function() {
 	
 	CookieAutoClicker.Ascend = async function() {
 		Game.Ascend(1);
-		await CookieAutoClicker.sleep(2000);
+		await CookieAutoClicker.sleep(8000);
 		
 		// 1st
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Legacy'].id);
@@ -365,11 +365,13 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kit'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heavenly luck'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
+		if(Game.Has('Permanent upgrade slot I')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(187,0);
+			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.BestKittenUpgrade].id,0);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
+		}
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Heralds'].id);
 		
 		// 2nd
@@ -392,11 +394,13 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Dominions'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
+		if(Game.Has('Permanent upgrade slot II')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(685,1);
+			Game.PutUpgradeInPermanentSlot(0,1);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
+		}
 		
 		// 4th
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Satan'].id);
@@ -441,6 +445,20 @@ CookieAutoClicker.launch = function() {
 		
 		Game.Reincarnate(1);
 		await CookieAutoClicker.sleep(2000);
+	}
+	
+	{
+		let kittenUpgrades = ['Kitten helpers','Kitten workers','Kitten engineers','Kitten overseers','Kitten managers','Kitten accountants','Kitten specialists',
+				      'Kitten experts','Kitten consultants','Kitten assistants to the regional manager','Kitten marketeers','Kitten analysts',
+				      'Kitten executives','Kitten angels','Fortune #103'];
+		CookieAutoClicker.BestKittenUpgrade = function() {
+			for(let i = kittenUpgrades.length-1; i >= 0; i--) {
+				if(Game.Upgrades[kittenUpgrades[i]].bought == 1) {
+					return kittenUpgrades[i];
+				}
+			}
+		}
+		
 	}
 	
 	{
