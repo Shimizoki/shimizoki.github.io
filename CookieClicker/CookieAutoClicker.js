@@ -167,9 +167,13 @@ CookieAutoClicker.launch = function() {
 		CookieAutoClicker.config = CookieAutoClicker.defaultConfig();
 	}
 
+	CookieAutoClicker.calcCookiesPerSecond = function() {
+		return Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
+	}
+	
 	CookieAutoClicker.calcPurchaseInSeconds = function(item, useBank=true) {
 		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].price;
-		let cps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
+		let cps = CookieAutoClicker.calcCookiesPerSecond();
 		
 		return Math.max(0, (price-(useBank?Game.cookies:0)) / cps);
 	}
@@ -191,6 +195,55 @@ CookieAutoClicker.launch = function() {
 		}
 	
 		return [bestIdx, Math.round(bestRoi)];
+	}
+	
+	CookieAutoClicker.calcBestBuildingStacked = function() {
+		let bestObj = {};
+		
+		let list = [];
+		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
+			obj = Game.ObjectsById[i];
+			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(obj.name);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps(obj.name);
+			
+			if(obj.locked == 0 && deltaCps != 0) {
+				me.name = obj.name;
+				me.roi = timeToBuy + (obj.price / deltaCps);
+				me.cost = obj.price
+				me.deltaCps = deltaCps;
+				me.timeToBuy = timeToBuy;
+				list.push(me);
+				
+				if(me.roi < bestObj.roi) {
+					bestObj = me;
+				}
+			}
+		}
+		
+		list.sort((a, b) => 
+			  (a.cost > b.cost) ? 1 :
+			  (a.roi > b.roi) ? 1 :
+			  -1
+		);
+		let bestIdx = list.findIndex(bestObj);
+		
+		for(let i=0; i < bestIdx-1; i++) {
+			
+			let cookiesAfterFirst = Game.cookies-list[i].cost;
+			let cpsAfterFirst = CookieAutoClicker.calcCookiesPerSecond()+list[i].deltaCps;
+			let timeFromFirstToBest = Math.max(0, (bestObj.cost-cookiesAfterFirst) / cpsAfterFirst);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps([list[i].name, bestObj.name]);
+			
+			let roi = list[i].timeToBuy + timeFromFirstToBest + ((list[i].cost+bestIdx.cost) / deltaCps);
+			
+			if(roi <= bestObj.roi) {
+				console.log("Double ROI! " + list[i].name + " => " + bestObject.name);
+				bestObj = list[i];
+				break;
+			}
+		}
+	
+		return [bestObj.name, Math.round(bestObj.roi)];
 	}
 	
 	CookieAutoClicker.calcBestUpgrade = function() {
@@ -284,12 +337,10 @@ CookieAutoClicker.launch = function() {
 		}
 	}
 	
-	CookieAutoClicker.calcPurchaseCps = function(itemName) {
-		let item = Game.Upgrades[itemName] ? Game.Upgrades[itemName] : Game.Objects[itemName];
-		
+	CookieAutoClicker.calcPurchaseCps = function(itemNames) {		
 		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
 	
-		let gains = CookieAutoClicker.CalculateGains(item.name);
+		let gains = CookieAutoClicker.CalculateGains(itemNames);
 		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
 	
 		return newCps - curCps;
@@ -374,7 +425,7 @@ CookieAutoClicker.launch = function() {
 		}
 	}
 	
-	CookieAutoClicker.CalculateGains=function(newUpgrade)
+CookieAutoClicker.CalculateGains=function(considered)
 	{
 		cookiesPs=0;
 		let mult=1;
@@ -403,28 +454,28 @@ CookieAutoClicker.launch = function() {
 		for (let i in Game.cookieUpgrades)
 		{
 			let me=Game.cookieUpgrades[i];
-			if (Game.Has(me.name) || newUpgrade == me.name)
+			if (Game.Has(me.name) || considered.includes(me.name))
 			{
 				mult*=(1+(typeof(me.power)==='function'?me.power(me):me.power)*0.01);
 			}
 		}
 
-		if (Game.Has('Specialized chocolate chips') || newUpgrade == 'Specialized chocolate chips') mult*=1.01;
-		if (Game.Has('Designer cocoa beans') || newUpgrade == 'Designer cocoa beans') mult*=1.02;
-		if (Game.Has('Underworld ovens') || newUpgrade == 'Underworld ovens') mult*=1.03;
-		if (Game.Has('Exotic nuts') || newUpgrade == 'Exotic nuts') mult*=1.04;
-		if (Game.Has('Arcane sugar') || newUpgrade == 'Arcane sugar') mult*=1.05;
+		if (Game.Has('Specialized chocolate chips') || considered.includes('Specialized chocolate chips')) mult*=1.01;
+		if (Game.Has('Designer cocoa beans') || considered.includes('Designer cocoa beans')) mult*=1.02;
+		if (Game.Has('Underworld ovens') || considered.includes('Underworld ovens')) mult*=1.03;
+		if (Game.Has('Exotic nuts') || considered.includes('Exotic nuts')) mult*=1.04;
+		if (Game.Has('Arcane sugar') || considered.includes('Arcane sugar')) mult*=1.05;
 
-		if (Game.Has('Increased merriness') || newUpgrade == 'Increased merriness') mult*=1.15;
-		if (Game.Has('Improved jolliness') || newUpgrade == 'Improved jolliness') mult*=1.15;
-		if (Game.Has('A lump of coal') || newUpgrade == 'A lump of coal') mult*=1.01;
-		if (Game.Has('An itchy sweater') || newUpgrade == 'An itchy sweater') mult*=1.01;
-		if (Game.Has('Santa\'s dominion') || newUpgrade == 'Santa\'s dominion') mult*=1.2;
+		if (Game.Has('Increased merriness') || considered.includes('Increased merriness')) mult*=1.15;
+		if (Game.Has('Improved jolliness') || considered.includes('Improved jolliness')) mult*=1.15;
+		if (Game.Has('A lump of coal') || considered.includes('A lump of coal')) mult*=1.01;
+		if (Game.Has('An itchy sweater') || considered.includes('An itchy sweater')) mult*=1.01;
+		if (Game.Has('Santa\'s dominion') || considered.includes('Santa\'s dominion')) mult*=1.2;
 
-		if (Game.Has('Fortune #100') || newUpgrade == 'Fortune #100') mult*=1.01;
-		if (Game.Has('Fortune #101') || newUpgrade == 'Fortune #101') mult*=1.07;
+		if (Game.Has('Fortune #100') || considered.includes('Fortune #100')) mult*=1.01;
+		if (Game.Has('Fortune #101') || considered.includes('Fortune #101')) mult*=1.07;
 
-		if (Game.Has('Dragon scale') || newUpgrade == 'Dragon scale') mult*=1.03;
+		if (Game.Has('Dragon scale') || considered.includes('Dragon scale')) mult*=1.03;
 
 		let buildMult=1;
 		if (Game.hasGod)
@@ -455,11 +506,11 @@ CookieAutoClicker.launch = function() {
 			else if (godLvl==3) buildMult*=0.99;
 		}
 
-		if (Game.Has('Santa\'s legacy') || newUpgrade == 'Santa\'s legacy') mult*=1+(Game.santaLevel+1)*0.03;
+		if (Game.Has('Santa\'s legacy') || considered.includes('Santa\'s legacy')) mult*=1+(Game.santaLevel+1)*0.03;
 
 		milkProgress=Game.AchievementsOwned/25;
 		let milkMult=1;
-		if (Game.Has('Santa\'s milk and cookies') || newUpgrade == 'Santa\'s milk and cookies') milkMult*=1.05;
+		if (Game.Has('Santa\'s milk and cookies') || considered.includes('Santa\'s milk and cookies')) milkMult*=1.05;
 		//if (Game.hasAura('Breath of Milk')) milkMult*=1.05;
 		milkMult*=1+Game.auraMult('Breath of Milk')*0.05;
 		if (Game.hasGod)
@@ -473,21 +524,21 @@ CookieAutoClicker.launch = function() {
 
 		let catMult=1;
 
-		if (Game.Has('Kitten helpers') || newUpgrade == 'Kitten helpers') catMult*=(1+milkProgress*0.1*milkMult);
-		if (Game.Has('Kitten workers') || newUpgrade == 'Kitten workers') catMult*=(1+milkProgress*0.125*milkMult);
-		if (Game.Has('Kitten engineers') || newUpgrade == 'Kitten engineers') catMult*=(1+milkProgress*0.15*milkMult);
-		if (Game.Has('Kitten overseers') || newUpgrade == 'Kitten overseers') catMult*=(1+milkProgress*0.175*milkMult);
-		if (Game.Has('Kitten managers') || newUpgrade == 'Kitten managers') catMult*=(1+milkProgress*0.2*milkMult);
-		if (Game.Has('Kitten accountants') || newUpgrade == 'Kitten accountants') catMult*=(1+milkProgress*0.2*milkMult);
-		if (Game.Has('Kitten specialists') || newUpgrade == 'Kitten specialists') catMult*=(1+milkProgress*0.2*milkMult);
-		if (Game.Has('Kitten experts') || newUpgrade == 'Kitten experts') catMult*=(1+milkProgress*0.2*milkMult);
-		if (Game.Has('Kitten consultants') || newUpgrade == 'Kitten consultants') catMult*=(1+milkProgress*0.2*milkMult);
-		if (Game.Has('Kitten assistants to the regional manager') || newUpgrade == 'Kitten assistants to the regional manager') catMult*=(1+milkProgress*0.175*milkMult);
-		if (Game.Has('Kitten marketeers') || newUpgrade == 'Kitten marketeers') catMult*=(1+milkProgress*0.15*milkMult);
-		if (Game.Has('Kitten analysts') || newUpgrade == 'Kitten analysts') catMult*=(1+milkProgress*0.125*milkMult);
-		if (Game.Has('Kitten executives') || newUpgrade == 'Kitten executives') catMult*=(1+milkProgress*0.115*milkMult);
-		if (Game.Has('Kitten angels') || newUpgrade == 'Kitten angels') catMult*=(1+milkProgress*0.1*milkMult);
-		if (Game.Has('Fortune #103') || newUpgrade == 'Fortune #103') catMult*=(1+milkProgress*0.05*milkMult);
+		if (Game.Has('Kitten helpers') || considered.includes('Kitten helpers')) catMult*=(1+milkProgress*0.1*milkMult);
+		if (Game.Has('Kitten workers') || considered.includes('Kitten workers')) catMult*=(1+milkProgress*0.125*milkMult);
+		if (Game.Has('Kitten engineers') || considered.includes('Kitten engineers')) catMult*=(1+milkProgress*0.15*milkMult);
+		if (Game.Has('Kitten overseers') || considered.includes('Kitten overseers')) catMult*=(1+milkProgress*0.175*milkMult);
+		if (Game.Has('Kitten managers') || considered.includes('Kitten managers')) catMult*=(1+milkProgress*0.2*milkMult);
+		if (Game.Has('Kitten accountants') || considered.includes('Kitten accountants')) catMult*=(1+milkProgress*0.2*milkMult);
+		if (Game.Has('Kitten specialists') || considered.includes('Kitten specialists')) catMult*=(1+milkProgress*0.2*milkMult);
+		if (Game.Has('Kitten experts') || considered.includes('Kitten experts')) catMult*=(1+milkProgress*0.2*milkMult);
+		if (Game.Has('Kitten consultants') || considered.includes('Kitten consultants')) catMult*=(1+milkProgress*0.2*milkMult);
+		if (Game.Has('Kitten assistants to the regional manager') || considered.includes('Kitten assistants to the regional manager')) catMult*=(1+milkProgress*0.175*milkMult);
+		if (Game.Has('Kitten marketeers') || considered.includes('Kitten marketeers')) catMult*=(1+milkProgress*0.15*milkMult);
+		if (Game.Has('Kitten analysts') || considered.includes('Kitten analysts')) catMult*=(1+milkProgress*0.125*milkMult);
+		if (Game.Has('Kitten executives') || considered.includes('Kitten executives')) catMult*=(1+milkProgress*0.115*milkMult);
+		if (Game.Has('Kitten angels') || considered.includes('Kitten angels')) catMult*=(1+milkProgress*0.1*milkMult);
+		if (Game.Has('Fortune #103') || considered.includes('Fortune #103')) catMult*=(1+milkProgress*0.05*milkMult);
 
 		let cookiesPsByType=[];
 		for (let i in Game.Objects)
@@ -495,32 +546,32 @@ CookieAutoClicker.launch = function() {
 			let me=Game.Objects[i];
 			storedCps=me.cps(me);
 			if (Game.ascensionMode!=1) me.storedCps*=(1+me.level*0.01)*buildMult;
-			if (me.id==1 && Game.Has('Milkhelp&reg; lactose intolerance relief tablets') || newUpgrade == 'Milkhelp&reg; lactose intolerance relief tablets') storedCps*=1+0.05*milkProgress*milkMult;//this used to be "me.storedCps*=1+0.1*Math.pow(catMult-1,0.5)" which was. hmm
-			storedTotalCps=(me.amount + ((newUpgrade == me.name)?1:0))*storedCps;
+			if (me.id==1 && Game.Has('Milkhelp&reg; lactose intolerance relief tablets') || considered.includes('Milkhelp&reg; lactose intolerance relief tablets')) storedCps*=1+0.05*milkProgress*milkMult;//this used to be "me.storedCps*=1+0.1*Math.pow(catMult-1,0.5)" which was. hmm
+			storedTotalCps=(me.amount + (considered.includes(me.name)?1:0))*storedCps;
 			cookiesPs+=storedTotalCps;
 			cookiesPsByType[me.name]=storedTotalCps;
 		}
 		//cps from buildings only
 		buildingCps=cookiesPs;
 
-		if (Game.Has('"egg"') || newUpgrade == '"egg"') {cookiesPs+=9;cookiesPsByType['"egg"']=9;}//"egg"
+		if (Game.Has('"egg"') || considered.includes('"egg"')) {cookiesPs+=9;cookiesPsByType['"egg"']=9;}//"egg"
 
 		mult*=catMult;
 
 		let eggMult=1;
-		if (Game.Has('Chicken egg') || newUpgrade == 'Chicken egg') eggMult*=1.01;
-		if (Game.Has('Duck egg') || newUpgrade == 'Duck egg') eggMult*=1.01;
-		if (Game.Has('Turkey egg') || newUpgrade == 'Turkey egg') eggMult*=1.01;
-		if (Game.Has('Quail egg') || newUpgrade == 'Quail egg') eggMult*=1.01;
-		if (Game.Has('Robin egg') || newUpgrade == 'Robin egg') eggMult*=1.01;
-		if (Game.Has('Ostrich egg') || newUpgrade == 'Ostrich egg') eggMult*=1.01;
-		if (Game.Has('Cassowary egg') || newUpgrade == 'Cassowary egg') eggMult*=1.01;
-		if (Game.Has('Salmon roe') || newUpgrade == 'Salmon roe') eggMult*=1.01;
-		if (Game.Has('Frogspawn') || newUpgrade == 'Frogspawn') eggMult*=1.01;
-		if (Game.Has('Shark egg') || newUpgrade == 'Shark egg') eggMult*=1.01;
-		if (Game.Has('Turtle egg') || newUpgrade == 'Turtle egg') eggMult*=1.01;
-		if (Game.Has('Ant larva') || newUpgrade == 'Ant larva') eggMult*=1.01;
-		if (Game.Has('Century egg') || newUpgrade == 'Century egg')
+		if (Game.Has('Chicken egg') || considered.includes('Chicken egg')) eggMult*=1.01;
+		if (Game.Has('Duck egg') || considered.includes('Duck egg')) eggMult*=1.01;
+		if (Game.Has('Turkey egg') || considered.includes('Turkey egg')) eggMult*=1.01;
+		if (Game.Has('Quail egg') || considered.includes('Quail egg')) eggMult*=1.01;
+		if (Game.Has('Robin egg') || considered.includes('Robin egg')) eggMult*=1.01;
+		if (Game.Has('Ostrich egg') || considered.includes('Ostrich egg')) eggMult*=1.01;
+		if (Game.Has('Cassowary egg') || considered.includes('Cassowary egg')) eggMult*=1.01;
+		if (Game.Has('Salmon roe') || considered.includes('Salmon roe')) eggMult*=1.01;
+		if (Game.Has('Frogspawn') || considered.includes('Frogspawn')) eggMult*=1.01;
+		if (Game.Has('Shark egg') || considered.includes('Shark egg')) eggMult*=1.01;
+		if (Game.Has('Turtle egg') || considered.includes('Turtle egg')) eggMult*=1.01;
+		if (Game.Has('Ant larva') || considered.includes('Ant larva')) eggMult*=1.01;
+		if (Game.Has('Century egg') || considered.includes('Century egg'))
 		{
 			//the boost increases a little every day, with diminishing returns up to +10% on the 100th day
 			let day=Math.floor((Date.now()-Game.startDate)/1000/10)*10/60/60/24;
@@ -530,7 +581,7 @@ CookieAutoClicker.launch = function() {
 
 		mult*=eggMult;
 
-		if (Game.Has('Sugar baking') || newUpgrade == 'Sugar baking') mult*=(1+Math.min(100,Game.lumps)*0.01);
+		if (Game.Has('Sugar baking') || considered.includes('Sugar baking')) mult*=(1+Math.min(100,Game.lumps)*0.01);
 
 		//if (Game.hasAura('Radiant Appetite')) mult*=2;
 		mult*=1+Game.auraMult('Radiant Appetite');
@@ -561,26 +612,26 @@ CookieAutoClicker.launch = function() {
 		cpsSucked=sucking*suckRate;
 
 
-		if (Game.Has('Elder Covenant') || newUpgrade == 'Elder Covenant') mult*=0.95;
+		if (Game.Has('Elder Covenant') || considered.includes('Elder Covenant')) mult*=0.95;
 
-		if (Game.Has('Golden switch [off]') || newUpgrade == 'Golden switch [off]')
+		if (Game.Has('Golden switch [off]') || considered.includes('Golden switch [off]'))
 		{
 			let goldenSwitchMult=1.5;
-			if (Game.Has('Residual luck') || newUpgrade == 'Residual luck')
+			if (Game.Has('Residual luck') || considered.includes('Residual luck'))
 			{
 				let upgrades=Game.goldenCookieUpgrades;
-				for (let i in upgrades) {if (Game.Has(upgrades[i]) || newUpgrade == upgrades[i].name) goldenSwitchMult+=0.1;}
+				for (let i in upgrades) {if (Game.Has(upgrades[i]) || considered.includes(upgrades[i].name)) goldenSwitchMult+=0.1;}
 			}
 			mult*=goldenSwitchMult;
 		}
-		if (Game.Has('Shimmering veil [off]') || newUpgrade == 'Shimmering veil [off]')
+		if (Game.Has('Shimmering veil [off]') || considered.includes('Shimmering veil [off]'))
 		{
 			let veilMult=0.5;
-			if (Game.Has('Reinforced membrane') || newUpgrade == 'Reinforced membrane') veilMult+=0.1;
+			if (Game.Has('Reinforced membrane') || considered.includes('Reinforced membrane')) veilMult+=0.1;
 			mult*=1+veilMult;
 		}
-		if (Game.Has('Magic shenanigans') || newUpgrade == 'Magic shenanigans') mult*=1000;
-		if (Game.Has('Occult obstruction') || newUpgrade == 'Occult obstruction') mult*=0;
+		if (Game.Has('Magic shenanigans') || considered.includes('Magic shenanigans')) mult*=1000;
+		if (Game.Has('Occult obstruction') || considered.includes('Occult obstruction')) mult*=0;
 
 
 		cookiesPs=Game.runModHookOnValue('cps',cookiesPs);
@@ -599,56 +650,56 @@ CookieAutoClicker.launch = function() {
 
 		//if (Game.hasBuff('Cursed finger')) cookiesPs=0;
 
-		computedMouseCps=CookieAutoClicker.mouseCps(newUpgrade);
+		computedMouseCps=CookieAutoClicker.mouseCps(considered);
 
 		return [cookiesPs, computedMouseCps];
 	}
 	
-	CookieAutoClicker.mouseCps=function(newUpgrade) {
+	CookieAutoClicker.mouseCps=function(considered) {
 		
 		let effs = CookieAutoClicker.calculatedEffs;
 		
 		var add=0;
-		if (Game.Has('Thousand fingers') || newUpgrade == 'Thousand fingers') add+=		0.1;
-		if (Game.Has('Million fingers') || newUpgrade == 'Million fingers') add*=		5;
-		if (Game.Has('Billion fingers') || newUpgrade == 'Billion fingers') add*=		10;
-		if (Game.Has('Trillion fingers') || newUpgrade == 'Trillion fingers') add*=		20;
-		if (Game.Has('Quadrillion fingers') || newUpgrade == 'Quadrillion fingers') add*=	20;
-		if (Game.Has('Quintillion fingers') || newUpgrade == 'Quintillion fingers') add*=	20;
-		if (Game.Has('Sextillion fingers') || newUpgrade == 'Sextillion fingers') add*=	20;
-		if (Game.Has('Septillion fingers') || newUpgrade == 'Septillion fingers') add*=	20;
-		if (Game.Has('Octillion fingers') || newUpgrade == 'Octillion fingers') add*=	20;
-		if (Game.Has('Nonillion fingers') || newUpgrade == 'Nonillion fingers') add*=	20;
+		if (Game.Has('Thousand fingers') || considered.includes('Thousand fingers')) add+=		0.1;
+		if (Game.Has('Million fingers') || considered.includes('Million fingers')) add*=		5;
+		if (Game.Has('Billion fingers') || considered.includes('Billion fingers')) add*=		10;
+		if (Game.Has('Trillion fingers') || considered.includes('Trillion fingers')) add*=		20;
+		if (Game.Has('Quadrillion fingers') || considered.includes('Quadrillion fingers')) add*=	20;
+		if (Game.Has('Quintillion fingers') || considered.includes('Quintillion fingers')) add*=	20;
+		if (Game.Has('Sextillion fingers') || considered.includes('Sextillion fingers')) add*=	20;
+		if (Game.Has('Septillion fingers') || considered.includes('Septillion fingers')) add*=	20;
+		if (Game.Has('Octillion fingers') || considered.includes('Octillion fingers')) add*=	20;
+		if (Game.Has('Nonillion fingers') || considered.includes('Nonillion fingers')) add*=	20;
 
 		var num=0;
 		for (var i in Game.Objects) {num+=Game.Objects[i].amount;}
 		num-=Game.Objects['Cursor'].amount;
 		add=add*num;
-		if (Game.Has('Plastic mouse') || newUpgrade == 'Plastic mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Iron mouse') || newUpgrade == 'Iron mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Titanium mouse') || newUpgrade == 'Titanium mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Adamantium mouse') || newUpgrade == 'Adamantium mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Unobtainium mouse') || newUpgrade == 'Unobtainium mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Eludium mouse') || newUpgrade == 'Eludium mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Wishalloy mouse') || newUpgrade == 'Wishalloy mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Fantasteel mouse') || newUpgrade == 'Fantasteel mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Nevercrack mouse') || newUpgrade == 'Nevercrack mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Armythril mouse') || newUpgrade == 'Armythril mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Technobsidian mouse') || newUpgrade == 'Technobsidian mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Plasmarble mouse') || newUpgrade == 'Plasmarble mouse') add+=Game.cookiesPs*0.01;
-		if (Game.Has('Miraculite mouse') || newUpgrade == 'Miraculite mouse') add+=Game.cookiesPs*0.01;
+		if (Game.Has('Plastic mouse') || considered.includes('Plastic mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Iron mouse') || considered.includes('Iron mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Titanium mouse') || considered.includes('Titanium mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Adamantium mouse') || considered.includes('Adamantium mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Unobtainium mouse') || considered.includes('Unobtainium mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Eludium mouse') || considered.includes('Eludium mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Wishalloy mouse') || considered.includes('Wishalloy mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Fantasteel mouse') || considered.includes('Fantasteel mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Nevercrack mouse') || considered.includes('Nevercrack mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Armythril mouse') || considered.includes('Armythril mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Technobsidian mouse') || considered.includes('Technobsidian mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Plasmarble mouse') || considered.includes('Plasmarble mouse')) add+=Game.cookiesPs*0.01;
+		if (Game.Has('Miraculite mouse') || considered.includes('Miraculite mouse')) add+=Game.cookiesPs*0.01;
 
-		if (Game.Has('Fortune #104') || newUpgrade == 'Fortune #104') add+=Game.cookiesPs*0.01;
+		if (Game.Has('Fortune #104') || considered.includes('Fortune #104')) add+=Game.cookiesPs*0.01;
 		var mult=1;
 
-		if (Game.Has('Santa\'s helpers') || newUpgrade == 'Santa\'s helpers') mult*=1.1;
-		if (Game.Has('Cookie egg') || newUpgrade == 'Cookie egg') mult*=1.1;
-		if (Game.Has('Halo gloves') || newUpgrade == 'Halo gloves') mult*=1.1;
-		if (Game.Has('Dragon claw') || newUpgrade == 'Dragon claw') mult*=1.03;
+		if (Game.Has('Santa\'s helpers') || considered.includes('Santa\'s helpers')) mult*=1.1;
+		if (Game.Has('Cookie egg') || considered.includes('Cookie egg')) mult*=1.1;
+		if (Game.Has('Halo gloves') || considered.includes('Halo gloves')) mult*=1.1;
+		if (Game.Has('Dragon claw') || considered.includes('Dragon claw')) mult*=1.03;
 
-		if (Game.Has('Aura gloves') || newUpgrade == 'Aura gloves')
+		if (Game.Has('Aura gloves') || considered.includes('Aura gloves'))
 		{
-			mult*=1+0.05*Math.min(Game.Objects['Cursor'].level,(Game.Has('Luminous gloves') || newUpgrade == 'Luminous gloves')?20:10);
+			mult*=1+0.05*Math.min(Game.Objects['Cursor'].level,(Game.Has('Luminous gloves') || considered.includes('Luminous gloves'))?20:10);
 		}
 
 		mult*=(typeof effs['click']==='undefined') ? (typeof def==='undefined'?1:def) : effs['click'];
@@ -669,7 +720,7 @@ CookieAutoClicker.launch = function() {
 		//if (Game.hasAura('Dragon Cursor')) mult*=1.05;
 		mult*=1+Game.auraMult('Dragon Cursor')*0.05;
 
-		let pow = (Game.Has('Reinforced index finger') || newUpgrade == 'Reinforced index finger')+(Game.Has('Carpal tunnel prevention cream') || newUpgrade == 'Carpal tunnel prevention cream')+(Game.Has('Ambidextrous') || newUpgrade == 'Ambidextrous');
+		let pow = (Game.Has('Reinforced index finger') || considered.includes('Reinforced index finger'))+(Game.Has('Carpal tunnel prevention cream') || considered.includes('Carpal tunnel prevention cream'))+(Game.Has('Ambidextrous') || considered.includes('Ambidextrous'));
 		var out=mult*(Math.pow(2,pow)+add);
 
 		out=Game.runModHookOnValue('cookiesPerClick',out);
