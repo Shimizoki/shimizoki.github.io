@@ -9,6 +9,11 @@ CookieAutoClicker.clicksPerSecond = 0;
 CookieAutoClicker.nextPurchase = 'UnInitialized';
 CookieAutoClicker.isLoaded = 0;
 
+CookieAutoClicker.runStartTimer = -1;
+CookieAutoClicker.millionCookiesTimer = -1;
+CookieAutoClicker.firstHCTimer = -1;
+CookieAutoClicker.firstAscendTimer = -1;
+
 CookieAutoClicker.launch = function() {
 	CookieAutoClicker.init = async function() {
 		'use strict';
@@ -18,6 +23,31 @@ CookieAutoClicker.launch = function() {
 		
 		CookieAutoClicker.addDisplay();
 		CookieAutoClicker.updateDisplay(CookieAutoClicker.nextPurchase);
+		
+		CookieAutoClicker.runStartTimer = Date.now();
+		
+		
+		let millionTimer = setInterval(() => {
+			if(Game.cookiesEarned >= 1000000){
+				CookieAutoClicker.millionCookiesTimer = CookieAutoClicker.runStartTimer - Date.now();
+				clearInterval(millionTimer);
+			}
+		}, 1);
+		
+		let hCTimer = setInterval(() => {
+			if(Game.ascendMeterLevel >= 1){
+				CookieAutoClicker.firstHCTimer = CookieAutoClicker.runStartTimer - Date.now();
+				clearInterval(hCTimer);
+			}
+		}, 1);
+		
+		let ascendTimer = setInterval(() => {
+			if(Game.resets >= 1){
+				CookieAutoClicker.firstAscendTimer = CookieAutoClicker.runStartTimer - Date.now();
+				clearInterval(ascendTimer);
+			}
+		}, 1);
+		
 		
 		if(Game.HasAchiev('Tiny cookie') == 0) {
 			Game.ClickTinyCookie();
@@ -187,43 +217,43 @@ CookieAutoClicker.launch = function() {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(itemName);
 			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, false);
 			
-			if(Game.UpgradesInStore[i].name == 'Bingo center/Research facility') {
+			if(itemName == 'Bingo center/Research facility') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Specialized chocolate chips') {
+			else if(itemName == 'Specialized chocolate chips') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Designer cocoa beans') {
+			else if(itemName == 'Designer cocoa beans') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Ritual rolling pins') {
+			else if(itemName == 'Ritual rolling pins') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Underworld ovens') {
+			else if(itemName == 'Underworld ovens') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Exotic nuts') {
+			else if(itemName == 'Exotic nuts') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'Arcane sugar') {
+			else if(itemName == 'Arcane sugar') {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
 			}
-			else if(Game.UpgradesInStore[i].name == 'One mind') {
+			else if(itemName == 'One mind') {
 				deltaCps = -1; //Game.UpgradesInStore[i].getPrice() / 50000;
 			}
-			else if(Game.UpgradesInStore[i].name == 'Communal brainsweep') {
+			else if(itemName == 'Communal brainsweep') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
-			else if(Game.UpgradesInStore[i].name == 'Elder Pact') {
+			else if(itemName == 'Elder Pact') {
 				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
 			}
-			else if(Game.UpgradesInStore[i].name == 'Lucky day') {
+			else if(itemName == 'Lucky day') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
-			else if(Game.UpgradesInStore[i].name == 'Serendipity') {
+			else if(itemName == 'Serendipity') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
-			else if(Game.UpgradesInStore[i].name == 'Get lucky') {
+			else if(itemName == 'Get lucky') {
 				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
 			}
 			else if(secondsOfCps < 10) {
@@ -309,10 +339,10 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Abaddon'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Virtues'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Dominions'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten Angels'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten angels'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(8,0);
+			Game.PutUpgradeInPermanentSlot(685,0);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
