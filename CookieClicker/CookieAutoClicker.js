@@ -9,10 +9,10 @@ CookieAutoClicker.clicksPerSecond = 0;
 CookieAutoClicker.nextPurchase = 'UnInitialized';
 CookieAutoClicker.isLoaded = 0;
 
-CookieAutoClicker.runStartTimer = -1;
-CookieAutoClicker.millionCookiesTimer = -1;
-CookieAutoClicker.firstHCTimer = -1;
-CookieAutoClicker.firstAscendTimer = -1;
+CookieAutoClicker.runStartTimer = 0;
+CookieAutoClicker.millionCookiesTimer = 0;
+CookieAutoClicker.firstHCTimer = 0;
+CookieAutoClicker.firstAscendTimer = 0;
 
 CookieAutoClicker.launch = function() {
 	CookieAutoClicker.init = async function() {
