@@ -274,46 +274,28 @@ CookieAutoClicker.launch = function() {
 			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, false);
 			
 			if(itemName == 'Bingo center/Research facility') {
-				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Specialized chocolate chips') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Designer cocoa beans') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Ritual rolling pins') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Underworld ovens') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Exotic nuts') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
-			}
-			else if(itemName == 'Arcane sugar') {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
+				deltaCps = (secondsOfCps < 60) ? (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON : CookieAutoClicker.calcPurchaseCps(itemName);
 			}
 			else if(itemName == 'One mind') {
 				deltaCps = -1; //Game.UpgradesInStore[i].getPrice() / 50000;
 			}
 			else if(itemName == 'Communal brainsweep') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+				deltaCps = -1;
 			}
 			else if(itemName == 'Elder Pact') {
-				deltaCps = Game.UpgradesInStore[i].getPrice() / 50000;
+				deltaCps = -1;
 			}
 			else if(itemName == 'Lucky day') {
-				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER : -1;
 			}
 			else if(itemName == 'Serendipity') {
-				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER : -1;
 			}
 			else if(itemName == 'Get lucky') {
-				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice() : -1;
+				deltaCps = (secondsOfCps < 60) ? Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER : -1;
 			}
 			else if(secondsOfCps < 10) {
-				deltaCps = Game.UpgradesInStore[i].getPrice();
+				deltaCps = (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON;
 			}
 			else {
 				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
