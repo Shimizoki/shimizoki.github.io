@@ -15,7 +15,7 @@ CookieAutoClicker.firstHCTimer = 0;
 CookieAutoClicker.firstAscendTimer = 0;
 
 CookieAutoClicker.launch = function() {
-	CookieAutoClicker.init = async function() {
+	CookieAutoClicker.init = function() {
 		'use strict';
 		
 		CookieAutoClicker.isLoaded = 1;
@@ -79,7 +79,7 @@ CookieAutoClicker.launch = function() {
 	
 		setInterval(() => {
 			CookieAutoClicker.TryDoPrestige();
-		}, 100)
+		}, 5000)
 		
 		
 		let fortunes = 0;
@@ -557,17 +557,15 @@ CookieAutoClicker.launch = function() {
 				break;
 			}
 		}
-		CookieAutoClicker.TryDoPrestige = async function() {
+		CookieAutoClicker.TryDoPrestige = function() {
 			if(nextBreakpointIdx >= hcBreakpoints.Count) {
 				if(Game.ascendMeterLevel >= Game.prestige){
 					CookieAutoClicker.Ascend();
-					await CookieAutoClicker.sleep(10000);
 				}
 			}
 			else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
 				//console.log("Attempting to Prestige at :" + CookieAutoClicker.calcHeavenlyChips() +" / "+ hcBreakpoints[nextBreakpointIdx])
 				CookieAutoClicker.Ascend();
-				await CookieAutoClicker.sleep(10000);
 				nextBreakpointIdx++;
 			}
 		}
