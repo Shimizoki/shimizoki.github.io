@@ -92,7 +92,7 @@ CookieAutoClicker.launch = function() {
 	
 			if(best[0] != null) {
 				CookieAutoClicker.updateDisplay(best[0].name + " (" + Math.round(best[1]) + ")");
-				best.buy();
+				best[0].buy();
 			}
 	
 		}, 100)
