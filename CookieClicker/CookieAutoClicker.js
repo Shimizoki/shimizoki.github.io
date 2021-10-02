@@ -655,7 +655,7 @@ CookieAutoClicker.CalculateGains=function(considered)
 			let me=Game.Objects[i];
 			
 			let earned = [];
-			for(let j = 0; j < me.tieredUpgrades.length; j++) {
+			for(let j = 1; j < me.tieredUpgrades.length; j++) {
 				if(considered.includes(me.tieredUpgrades[j].name)) {
 					earned.push(me.tieredUpgrades[j]);
 					me.tieredUpgrades[j].earn();
@@ -665,6 +665,7 @@ CookieAutoClicker.CalculateGains=function(considered)
 			storedCps=me.cps(me);
 	
 			for(let j = 0; j < earned.length; j++) {
+				console.log('unearned: ' + earned[j].name);
 				earned[j].unearn();
 			}
 	
