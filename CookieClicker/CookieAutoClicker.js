@@ -656,7 +656,7 @@ CookieAutoClicker.CalculateGains=function(considered)
 			
 			let earned = [];
 			for(let j = 0; j < me.tieredUpgrades.length; j++) {
-				if(considered.includes(me.tieredUpgrades[j].name){
+				if(considered.includes(me.tieredUpgrades[j].name)) {
 					earned.push(me.tieredUpgrades[j]);
 					me.tieredUpgrades[j].earn();
 				}
