@@ -413,7 +413,7 @@ CookieAutoClicker.launch = function() {
 		// 5th
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucky number'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Residual luck'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy Vol. I'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergies Vol. I'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Elder spice'].id);
  
 		// 6th
@@ -424,7 +424,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Seraphim'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Beelzebub'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Divine bakeries'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy Vol. II'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergies Vol. II'].id);
 
 		// 7th
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sacrilegious corruption'].id);
