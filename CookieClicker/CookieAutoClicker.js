@@ -406,14 +406,14 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Satan'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Starter kitchen'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Decisive fate'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden cookie alert sounds'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Golden cookie alert sound'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Unholy bait'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Halo gloves'].id);
  
 		// 5th
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucky number'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Residual luck'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy vol I'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy Vol. I'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Elder spice'].id);
  
 		// 6th
@@ -424,7 +424,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Seraphim'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Beelzebub'].id);
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Divine bakeries'].id);
-		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy vol II'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Synergy Vol. II'].id);
 
 		// 7th
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sacrilegious corruption'].id);
