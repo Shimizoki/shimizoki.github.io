@@ -91,7 +91,7 @@ CookieAutoClicker.launch = function() {
 				[Game.Upgrades[bestUpgrade[0]], bestUpgrade[1]];
 	
 			if(best[0] != null) {
-				CookieAutoClicker.updateDisplay(best[0].name + " (" + Math.round(best[1]) + ")");
+				CookieAutoClicker.updateDisplay(best[0].name + " (" + CookieAutoClicker.msToTime(Math.round(best[1])*1000) + ")");
 				best[0].buy();
 			}
 	
