@@ -194,7 +194,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [Game.ObjectsById[bestIdx].name, Math.round(bestRoi)];
+		return [Game.ObjectsById[bestId].name, Math.round(bestRoi)];
 	}
 	
 	CookieAutoClicker.calcBestBuildingStacked = function() {
@@ -328,7 +328,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [Game.UpgradesById[bestId].name, Math.round(bestRoi)];
+		return [(bestId != -1)?Game.UpgradesById[bestId].name:null, Math.round(bestRoi)];
 	}
 	
 	CookieAutoClicker.clickGoldenCookie = function() {
