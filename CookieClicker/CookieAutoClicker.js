@@ -365,7 +365,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
 		if(Game.Has('Permanent upgrade slot I')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.calcBestKittenUpgrade()].id,0);
+			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.calcHighestKittenUpgrade()].id,0);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(500);
@@ -394,7 +394,13 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot II'].id);
 		if(Game.Has('Permanent upgrade slot II')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(0,1);
+			let js = Game.Upgrades[CookieAutoClicker.calcHighestUpgrade('Javascript console')]
+			let iv = Game.Upgrades[CookieAutoClicker.calcHighestUpgrade('Idleverse')]
+			let bestId = (iv && js && iv.cost > js.cost) ? iv.id :
+				(iv && !js) ? iv.id :
+				(js) ? js.id :
+				1;
+			Game.PutUpgradeInPermanentSlot(bestId,1);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(500);
@@ -522,14 +528,23 @@ CookieAutoClicker.launch = function() {
 		let kittenUpgrades = ['Kitten helpers','Kitten workers','Kitten engineers','Kitten overseers','Kitten managers','Kitten accountants','Kitten specialists',
 				      'Kitten experts','Kitten consultants','Kitten assistants to the regional manager','Kitten marketeers','Kitten analysts',
 				      'Kitten executives','Kitten angels','Fortune #103'];
-		CookieAutoClicker.calcBestKittenUpgrade = function() {
+		CookieAutoClicker.calcHighestKittenUpgrade = function() {
 			for(let i = kittenUpgrades.length-1; i >= 0; i--) {
 				if(Game.Upgrades[kittenUpgrades[i]].bought == 1) {
 					return kittenUpgrades[i];
 				}
 			}
 		}
-		
+	}
+	
+	CookieAutoClicker.calcHighestUpgrade = function(upgradeName) {
+		let tiers = Game.Objects[upgradeName].tieredUpgrades;
+		for(let i = tiers.length-1; i >= 1; i--) {
+			if(tiers[i].bought) {
+				return tiers[i].name;
+			}
+		}
+		return null;
 	}
 	
 	{
