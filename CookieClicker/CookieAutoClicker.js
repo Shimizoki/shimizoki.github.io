@@ -173,7 +173,7 @@ CookieAutoClicker.launch = function() {
 		let bestId = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
-			let deltaCps = CookieAutoClicker.calcPurchaseCps(Game.ObjectsById[i].name);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps([Game.ObjectsById[i].name]);
 			
 			if(Game.ObjectsById[i].locked == 0 && deltaCps != 0) {
 				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
@@ -194,7 +194,7 @@ CookieAutoClicker.launch = function() {
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			obj = Game.ObjectsById[i];
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(obj.name);
-			let deltaCps = CookieAutoClicker.calcPurchaseCps(obj.name);
+			let deltaCps = CookieAutoClicker.calcPurchaseCps([obj.name]);
 			
 			if(obj.locked == 0 && deltaCps != 0) {
 				me.name = obj.name;
@@ -265,7 +265,7 @@ CookieAutoClicker.launch = function() {
 			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, false);
 			
 			if(itemName == 'Bingo center/Research facility') {
-				deltaCps = (secondsOfCps < 60) ? (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON : CookieAutoClicker.calcPurchaseCps(itemName);
+				deltaCps = (secondsOfCps < 60) ? (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON : CookieAutoClicker.calcPurchaseCps([itemName]);
 			}
 			else if(itemName == 'One mind') {
 				deltaCps = -1; //Game.UpgradesInStore[i].getPrice() / 50000;
@@ -289,7 +289,7 @@ CookieAutoClicker.launch = function() {
 				deltaCps = (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON;
 			}
 			else {
-				deltaCps = CookieAutoClicker.calcPurchaseCps(itemName);
+				deltaCps = CookieAutoClicker.calcPurchaseCps([itemName]);
 			}
 			
 			if(deltaCps > 0) {
