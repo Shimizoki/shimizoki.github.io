@@ -85,12 +85,9 @@ CookieAutoClicker.launch = function() {
 		let fortunes = 0;
 		for(let i in Game.Tiers['fortune'].upgrades) {
 			if (Game.Has(Game.Tiers['fortune'].upgrades[i].name) == 0) {
-				console.log('starting the hunt for fortunes');
 				let fortuneInterval = setInterval(() => {
-					if(Game.Has(Game.Upgrades['Fortune cookies'])) {
-						console.log('still hunting...');
+					if(Game.Has('Fortune cookies')) {
 						if(document.querySelector('.fortune')) {
-							console.log('found!');
 							document.querySelector('.fortune').click();
 
 							fortunes = 0;
