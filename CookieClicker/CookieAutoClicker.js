@@ -367,7 +367,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
 		if(Game.Has('Permanent upgrade slot I')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.BestKittenUpgrade].id,0);
+			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.calcBestKittenUpgrade()].id,0);
 			await CookieAutoClicker.sleep(1000);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(1000);
@@ -451,7 +451,7 @@ CookieAutoClicker.launch = function() {
 		let kittenUpgrades = ['Kitten helpers','Kitten workers','Kitten engineers','Kitten overseers','Kitten managers','Kitten accountants','Kitten specialists',
 				      'Kitten experts','Kitten consultants','Kitten assistants to the regional manager','Kitten marketeers','Kitten analysts',
 				      'Kitten executives','Kitten angels','Fortune #103'];
-		CookieAutoClicker.BestKittenUpgrade = function() {
+		CookieAutoClicker.calcBestKittenUpgrade = function() {
 			for(let i = kittenUpgrades.length-1; i >= 0; i--) {
 				if(Game.Upgrades[kittenUpgrades[i]].bought == 1) {
 					return kittenUpgrades[i];
