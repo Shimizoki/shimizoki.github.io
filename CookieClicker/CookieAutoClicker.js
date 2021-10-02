@@ -653,7 +653,21 @@ CookieAutoClicker.CalculateGains=function(considered)
 		for (let i in Game.Objects)
 		{
 			let me=Game.Objects[i];
+			
+			let earned = [];
+			for(let j = 0; j < me.tieredUpgrades.length; j++) {
+				if(considered.includes(me.tieredUpgrades[j].name){
+					earned.push(me.tieredUpgrades[j]);
+					me.tieredUpgrades[j].earn();
+				}
+			}
+	
 			storedCps=me.cps(me);
+	
+			for(let j = 0; j < earned.length; j++) {
+				earned[j].unearn();
+			}
+	
 			if (Game.ascensionMode!=1) me.storedCps*=(1+me.level*0.01)*buildMult;
 			if (me.id==1 && Game.Has('Milkhelp&reg; lactose intolerance relief tablets') || considered.includes('Milkhelp&reg; lactose intolerance relief tablets')) storedCps*=1+0.05*milkProgress*milkMult;//this used to be "me.storedCps*=1+0.1*Math.pow(catMult-1,0.5)" which was. hmm
 			storedTotalCps=(me.amount + (considered.includes(me.name)?1:0))*storedCps;
