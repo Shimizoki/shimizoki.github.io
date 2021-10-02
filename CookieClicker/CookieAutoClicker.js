@@ -179,7 +179,7 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.calcBestBuilding = function() {
-		let bestRoi = 1000000000000000000000000000;
+		let bestRoi = Number.POSITIVE_INFINITY;
 		let bestId = -1;
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
@@ -247,7 +247,7 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.calcBestUpgrade = function() {
-		let bestRoi = 1000000000000000000000000000;
+		let bestRoi = Number.POSITIVE_INFINITY;
 		let bestId = -1;
 		for(let i=0; i < Game.UpgradesInStore.length; i++) {
 			let deltaCps = 0;
