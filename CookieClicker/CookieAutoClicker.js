@@ -527,7 +527,7 @@ CookieAutoClicker.launch = function() {
 	{
 		let kittenUpgrades = ['Kitten helpers','Kitten workers','Kitten engineers','Kitten overseers','Kitten managers','Kitten accountants','Kitten specialists',
 				      'Kitten experts','Kitten consultants','Kitten assistants to the regional manager','Kitten marketeers','Kitten analysts',
-				      'Kitten executives','Kitten angels','Fortune #103'];
+				      'Kitten executives'];
 		CookieAutoClicker.calcHighestKittenUpgrade = function() {
 			for(let i = kittenUpgrades.length-1; i >= 0; i--) {
 				if(Game.Upgrades[kittenUpgrades[i]].bought == 1) {
@@ -557,15 +557,17 @@ CookieAutoClicker.launch = function() {
 				break;
 			}
 		}
-		CookieAutoClicker.TryDoPrestige = function() {
+		CookieAutoClicker.TryDoPrestige = async function() {
 			if(nextBreakpointIdx >= hcBreakpoints.Count) {
 				if(Game.ascendMeterLevel >= Game.prestige){
 					CookieAutoClicker.Ascend();
+					await CookieAutoClicker.sleep(10000);
 				}
 			}
 			else if(CookieAutoClicker.calcHeavenlyChips() >= hcBreakpoints[nextBreakpointIdx]) {
 				//console.log("Attempting to Prestige at :" + CookieAutoClicker.calcHeavenlyChips() +" / "+ hcBreakpoints[nextBreakpointIdx])
 				CookieAutoClicker.Ascend();
+				await CookieAutoClicker.sleep(10000);
 				nextBreakpointIdx++;
 			}
 		}
