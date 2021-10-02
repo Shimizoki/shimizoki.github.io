@@ -685,21 +685,34 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.addDisplay = function(){
-	  const parent = document.querySelector('#versionNumber');
-	  let newElement = document.createElement('div');
-	  newElement.id = "nextPurchase";
-	  newElement.style.color = "white";
-	  newElement.style.cursor = "pointer";
-	  newElement.textContent = "";
-	  parent.appendChild(newElement);
+		const parent = document.querySelector('#versionNumber');
+		let newElement = document.createElement('div');
+		newElement.id = "nextPurchase";
+		newElement.style.color = "white";
+		newElement.style.cursor = "pointer";
+		newElement.textContent = "";
+		parent.appendChild(newElement);
+		
+		CookieAutoClicker.addTimers();
 	}
 	
-	CookieAutoClicker.updateDisplay = function(value){
-		if(value == nextPurchase) { return; }
+	CookieAutoClicker.addTimers = function(){
+	  const parent = document.querySelector('#topBar');
+	  let newElement = document.createElement('div');
+	  newElement.id = "timerBar";
+	  newElement.textContent = "";
+	  parent.insertBefore(newElement, parent.lastChild);
+	}
 	
-		let element = document.querySelector('#nextPurchase');
-		element.textContent = "Next: " + value;
-		CookieAutoClicker.nextPurchase = value;
+	CookieAutoClicker.updateDisplay = function(newPurchase){
+		if(newPurchase != nextPurchase && newPurchase != "") {
+			let element = document.querySelector('#nextPurchase');
+			element.textContent = "Next: " + newPurchase;
+			CookieAutoClicker.nextPurchase = newPurchase;
+		}
+		
+		document.querySelector('#timerBar').textContent = "Million: " + (Math.round(CookieAutoClicker.millionCookiesTimer/600)/100) + "m | HC: " + 
+			(Math.round(CookieAutoClicker.firstHCTimer/36000)/100) + "h | Ascend: " + (Math.round(CookieAutoClicker.firstAscendTimer/36000)/100) + "h";
 	}
 	
 	CookieAutoClicker.sleep = function(ms) {
