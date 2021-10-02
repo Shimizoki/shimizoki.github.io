@@ -255,7 +255,8 @@ CookieAutoClicker.launch = function() {
 			   itemName == 'Shimmering veil [on]' ||
 			   itemName == 'Golden cookie sound selector' ||
 			   itemName == 'Background selector' ||
-			   itemName == 'Milk selector'
+			   itemName == 'Milk selector' ||
+			   itemName == 'Sugar frenzy'
 			) {
 				continue;
 			}
