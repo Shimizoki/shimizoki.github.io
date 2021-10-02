@@ -85,24 +85,14 @@ CookieAutoClicker.launch = function() {
 		setInterval(()=>{
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
 			let bestUpgrade = CookieAutoClicker.calcBestUpgrade();
+			
+			let best = (bestBuilding[1] < bestUpgrade[1]) ?
+				[Game.Objects[bestBuilding[0]], bestBuilding[1]] :
+				[Game.Upgrades[bestUpgrade[0]], bestUpgrade[1]];
 	
-			if(bestBuilding[1] < bestUpgrade[1]){
-				//console.log("Best Index: " + bestBuilding[0] + " with ROI: " + bestRoi);
-				if(bestBuilding[0] != null) {
-					//console.log("Best Purchase: " + Game.ObjectsById[bestBuilding[0]].name);
-					CookieAutoClicker.updateDisplay(bestBuilding[0] + " (" + Math.round(bestBuilding[1]) + ")");
-					Game.Objects[bestBuilding[0]].buy();
-				}
-			}
-			else {
-				//console.log("Best Index: " + bestUpgrade[0] + " with ROI: " + bestRoi);
-				if(bestUpgrade[0] != null) {
-					//console.log("Best Purchase: " + Game.UpgradesInStore[bestUpgrade[0]].name);
-					CookieAutoClicker.updateDisplay(bestUpgrade[0] + " (" + Math.round(bestUpgrade[1]) + ")");
-					if(Game.Upgrades[bestUpgrade[0]].canBuy() == 1) {
-						Game.Upgrades[bestUpgrade[0]].buy();
-					}
-				}
+			if(best[0] != null) {
+				CookieAutoClicker.updateDisplay(best[0].name + " (" + Math.round(best[1]) + ")");
+				best.buy();
 			}
 	
 		}, 100)
