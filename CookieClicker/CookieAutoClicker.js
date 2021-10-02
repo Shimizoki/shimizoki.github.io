@@ -81,6 +81,27 @@ CookieAutoClicker.launch = function() {
 			CookieAutoClicker.TryDoPrestige();
 		}, 100)
 		
+		
+		let fortunes = 0;
+		for(let i in Game.Tiers['fortune'].upgrades) {
+			if (Game.Has(list[i].name) == 0) {
+				let fortuneInterval = setInterval(() => {
+					if(Game.Has(Game.Upgrades['Fortune cookies'])) {
+						if(document.querySelector('.fortune')) {
+							document.querySelector('.fortune').click();
+
+							fortunes = 0;
+							for(let i in Game.Tiers['fortune'].upgrades) {
+								if (Game.Has(list[i].name)){ fortunes++; }
+							}
+
+							if (fortunes >= list.length) { clearInterval(fortuneInterval); }
+						}
+					}
+				}
+			}	
+		}, 9000);
+		
 		// Interval for buying Buildings and Upgrades
 		setInterval(()=>{
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
@@ -665,7 +686,6 @@ CookieAutoClicker.CalculateGains=function(considered)
 			storedCps=me.cps(me);
 	
 			for(let j = 0; j < earned.length; j++) {
-				console.log('unearned: ' + earned[j].name);
 				earned[j].unearn();
 			}
 	
