@@ -365,7 +365,10 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot I'].id);
 		if(Game.Has('Permanent upgrade slot I')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(Game.Upgrades[CookieAutoClicker.calcHighestKittenUpgrade()].id,0);
+			let ks = Game.Upgrades[CookieAutoClicker.calcHighestKittenUpgrade()];
+			let bestId = (ks) ? ks.id :
+				0;
+			Game.PutUpgradeInPermanentSlot(bestId,0);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(500);
@@ -442,6 +445,9 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot III'].id);
 		if(Game.Has('Permanent upgrade slot III')){
 			await CookieAutoClicker.sleep(1000);
+			let ks = Game.Upgrades[CookieAutoClicker.calcHighestKittenUpgrade(2)];
+			let bestId = (ks) ? ks.id :
+				2;
 			Game.PutUpgradeInPermanentSlot(1,2);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
@@ -472,7 +478,7 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot IV'].id);
 		if(Game.Has('Permanent upgrade slot IV')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(2,3);
+			Game.PutUpgradeInPermanentSlot(3,3);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(500);
@@ -502,7 +508,10 @@ CookieAutoClicker.launch = function() {
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot V'].id);
 		if(Game.Has('Permanent upgrade slot IV')){
 			await CookieAutoClicker.sleep(1000);
-			Game.PutUpgradeInPermanentSlot(3,4);
+			let iv = Game.Upgrades[CookieAutoClicker.calcHighestUpgrade('Idleverse', 2)];
+			let bestId = (iv) ? iv.id :
+				4;
+			Game.PutUpgradeInPermanentSlot(bestId,4);
 			await CookieAutoClicker.sleep(500);
 			document.querySelector('#promptOption0').click();
 			await CookieAutoClicker.sleep(500);
@@ -528,20 +537,27 @@ CookieAutoClicker.launch = function() {
 		let kittenUpgrades = ['Kitten helpers','Kitten workers','Kitten engineers','Kitten overseers','Kitten managers','Kitten accountants','Kitten specialists',
 				      'Kitten experts','Kitten consultants','Kitten assistants to the regional manager','Kitten marketeers','Kitten analysts',
 				      'Kitten executives'];
-		CookieAutoClicker.calcHighestKittenUpgrade = function() {
+		CookieAutoClicker.calcHighestKittenUpgrade = function(num = 1) {
 			for(let i = kittenUpgrades.length-1; i >= 0; i--) {
 				if(Game.Upgrades[kittenUpgrades[i]].bought == 1) {
-					return kittenUpgrades[i];
+					num--;
+					if(num <= 0){
+						return kittenUpgrades[i];
+					}
 				}
 			}
+			return null;
 		}
 	}
 	
-	CookieAutoClicker.calcHighestUpgrade = function(upgradeName) {
+	CookieAutoClicker.calcHighestUpgrade = function(upgradeName, num = 1) {
 		let tiers = Game.Objects[upgradeName].tieredUpgrades;
 		for(let i = tiers.length-1; i >= 1; i--) {
 			if(tiers[i].bought) {
-				return tiers[i].name;
+				num--;
+				if(num <= 0){
+					return tiers[i].name;
+				}
 			}
 		}
 		return null;
