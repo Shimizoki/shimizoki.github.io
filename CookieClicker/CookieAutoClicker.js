@@ -430,6 +430,77 @@ CookieAutoClicker.launch = function() {
 		}
 		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Distilled essence of redoubled luck'].id);
 		
+		
+		// 8th - 12,313,751 - Total HC: 29,644,743 - 26.052 decillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Label printer'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Fanciful dairy selection'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['God'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucifer'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Genius accounting'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Wrinkly cookie'].id);
+
+		// 9th - 77,777,777 - Total HC: 107,422,520 - 1.2396 undecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Lucky payout'].id);
+
+		// 10th - 240,353,606 - Total HC: 347,776,126 - 42.063 undecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Chimera'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Eye of the wrinkler'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Stevia caelestis'].id);
+
+		// 11th - 900M - Total HC: 1,247,776,126 - 1.9427 duodecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar baking'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Diabetica daemonicus'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot IV'].id);
+		if(Game.Has('Permanent upgrade slot IV')){
+			await CookieAutoClicker.sleep(1000);
+			Game.PutUpgradeInPermanentSlot(2,3);
+			await CookieAutoClicker.sleep(500);
+			document.querySelector('#promptOption0').click();
+			await CookieAutoClicker.sleep(500);
+		}
+
+		// 12th - 3B - Total HC: 4,247,776,126 - 76.645 duodecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar craving'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar aging process'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sucralosia inutilis'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Sugar crystal cookie'].id);
+
+		// 13th - 11,111,111,110 - Total HC: 15,358,887,236 - 3.6231 tredecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Shimmering veil'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Keepsakes'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Kitten wages'].id);
+
+		// 14th - 30,555,555,525 - Total HC: 45,914,442,761 - 96.794 tredecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Aura gloves'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Cosmic beginner\'s luck'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Reinforced membrane'].id);
+
+		// 15th - 86,777,777,777 - Total HC: 132,692,220,538 - 2.3363 quattuordecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Cat ladies'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Fortune cookies'].id);
+
+		// 16th - 383B - Total HC: 515,692,220,538 - 137.14 quattuordecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Permanent upgrade slot V'].id);
+		if(Game.Has('Permanent upgrade slot IV')){
+			await CookieAutoClicker.sleep(1000);
+			Game.PutUpgradeInPermanentSlot(3,4);
+			await CookieAutoClicker.sleep(500);
+			document.querySelector('#promptOption0').click();
+			await CookieAutoClicker.sleep(500);
+		}
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of pastries'].id);
+
+		// 17th - 333B - Total HC: 848,692,220,538 - 611.29 quattuordecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of not cookies'].id);
+
+		// 18th - 488,555,555,554 - Total HC: 1,337,247,776,092 - 2.3913 quindecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Luminous gloves'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Pet the dragon'].id);
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Box of maybe cookies'].id);
+
+		// 19th - 900B - Total HC: 2,237,247,776,092 - 11.198 quindecillion
+		Game.PurchaseHeavenlyUpgrade(Game.Upgrades['Milkhelp lactose intolerance relief tablets'].id);
+		
 		Game.Reincarnate(1);
 		await CookieAutoClicker.sleep(2000);
 	}
@@ -449,7 +520,8 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	{
-		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661, 17330992];
+		let hcBreakpoints = [440, 3327, 36917, 162088, 10006777, 4097661, 17330992, 29644743, 107777777, 347776126, 1247776126, 4247776126,
+				     15358887236, 45914442761, 132692220538, 515692220538, 848692220538, 1337247776092, 2237247776092];
 		let nextBreakpointIdx = 0;
 		for(let i = 0; i < hcBreakpoints.length; i++) {
 			if(Game.prestige < hcBreakpoints[i]){
