@@ -29,21 +29,21 @@ CookieAutoClicker.launch = function() {
 		
 		let millionTimer = setInterval(() => {
 			if(Game.cookiesEarned >= 1000000){
-				CookieAutoClicker.millionCookiesTimer = CookieAutoClicker.runStartTimer - Date.now();
+				CookieAutoClicker.millionCookiesTimer = Date.now()-CookieAutoClicker.runStartTimer;
 				clearInterval(millionTimer);
 			}
 		}, 1);
 		
 		let hCTimer = setInterval(() => {
 			if(Game.ascendMeterLevel >= 1){
-				CookieAutoClicker.firstHCTimer = CookieAutoClicker.runStartTimer - Date.now();
+				CookieAutoClicker.firstHCTimer = Date.now()-CookieAutoClicker.runStartTimer;
 				clearInterval(hCTimer);
 			}
 		}, 1);
 		
 		let ascendTimer = setInterval(() => {
 			if(Game.resets >= 1){
-				CookieAutoClicker.firstAscendTimer = CookieAutoClicker.runStartTimer - Date.now();
+				CookieAutoClicker.firstAscendTimer = Date.now()-CookieAutoClicker.runStartTimer;
 				clearInterval(ascendTimer);
 			}
 		}, 1);
