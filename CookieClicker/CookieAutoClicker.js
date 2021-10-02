@@ -574,7 +574,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 		CookieAutoClicker.TryDoPrestige = function() {
-			console.log('Trying to Prestige')
+			console.log('Trying to Prestige (' + (nextBreakpointIdx+1) + "/" + hcBreakpoints.length + ")")
 			if(nextBreakpointIdx >= hcBreakpoints.Count) {
 				console.log('No more Breakpoints')
 				if(Game.ascendMeterLevel >= Game.prestige){
