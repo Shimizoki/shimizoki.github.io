@@ -796,7 +796,7 @@ CookieAutoClicker.launch = function() {
 	
 			if (Game.ascensionMode!=1) me.storedCps*=(1+me.level*0.01)*buildMult;
 			if (me.id==1 && Game.Has('Milkhelp&reg; lactose intolerance relief tablets') || considered.includes('Milkhelp&reg; lactose intolerance relief tablets')) storedCps*=1+0.05*milkProgress*milkMult;//this used to be "me.storedCps*=1+0.1*Math.pow(catMult-1,0.5)" which was. hmm
-			storedTotalCps=(me.amount + (considered.includes(me.name)?1]:0))*storedCps;
+			storedTotalCps=(me.amount + (considered.includes(me.name)?1:0))*storedCps;
 			cookiesPs+=storedTotalCps;
 			cookiesPsByType[me.name]=storedTotalCps;
 		}
