@@ -84,26 +84,22 @@ CookieAutoClicker.launch = function() {
 		setInterval(() => {
 			if(Game.Has('A crumbly egg')) {
 				if(Game.dragonLevel < 5) { 
-					CookieAutoClicker.UpgradeDragon(5); 
-					if(Game.dragonLevel = 5) { 
+					if(CookieAutoClicker.UpgradeDragon(5) == 5) { 
 						CookieAutoClicker.SetDragonAura('Breath of Milk', 0); 
 					}
 				}
 				else if(Game.dragonLevel < 14) { 
-					CookieAutoClicker.UpgradeDragon(14); 
-					if(Game.dragonLevel = 14) { 
+					if(CookieAutoClicker.UpgradeDragon(14) == 14) { 
 						CookieAutoClicker.SetDragonAura('Dragonflight', 0); 
 					}
 				}
 				else if(Game.dragonLevel < 19) { 
-					CookieAutoClicker.UpgradeDragon(19); 
-					if(Game.dragonLevel = 19) { 
+					if(CookieAutoClicker.UpgradeDragon(19) == 19) { 
 						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
 					}
 				}
 				else if(Game.dragonLevel < 25) { 
-					CookieAutoClicker.UpgradeDragon(25); 
-					if(Game.dragonLevel = 25) { 
+					if(CookieAutoClicker.UpgradeDragon(25) == 25) { 
 						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
 						CookieAutoClicker.SetDragonAura('Breath of Milk', 1); 
 					}
