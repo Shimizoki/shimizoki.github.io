@@ -315,7 +315,7 @@ CookieAutoClicker.launch = function() {
 			   itemName == 'Shimmering veil [off]' || itemName == 'Shimmering veil [on]' ||
 			   itemName == 'Golden cookie sound selector' || itemName == 'Background selector' ||
 			   itemName == 'Milk selector' || itemName == 'Sugar frenzy' ||
-			   itemName == 'Elder Pledge' || itemName == 'Elder Covenant'
+			   itemName == 'Elder Pledge' || itemName == 'Elder Covenant' || itemName == 'Revoke Elder Covenant'
 			) {
 				continue;
 			}
