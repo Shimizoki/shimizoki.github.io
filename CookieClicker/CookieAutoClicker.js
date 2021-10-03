@@ -81,6 +81,16 @@ CookieAutoClicker.launch = function() {
 			CookieAutoClicker.TryDoPrestige();
 		}, 10000)
 		
+		setInterval(() => {
+			if(Game.Has('A crumbly egg')) {
+				if(Game.dragonLevel < 14) { 
+					CookieAutoClicker.UpgradeDragon(14); 
+					if(Game.dragonLevel = 14) { 
+						CookieAutoClicker.SetDragonAura('Dragonflight'); 
+					}
+				}
+			}
+		}, 10000)
 		
 		let fortunes = 0;
 		for(let i in Game.Tiers['fortune'].upgrades) {
@@ -265,20 +275,13 @@ CookieAutoClicker.launch = function() {
 			let deltaCps = 0;
 			let itemName = Game.UpgradesInStore[i].name;
 			
-			if(itemName == 'Festive biscuit' || 
-			   itemName == 'Ghostly biscuit' ||
-			   itemName == 'Lovesick biscuit' ||
-			   itemName == 'Fool\'s biscuit' ||
-			   itemName == 'Bunny biscuit'  ||
-			   itemName == 'Chocolate egg' ||
-			   itemName == 'Golden switch [off]' ||
-			   itemName == 'Golden switch [on]' ||
-			   itemName == 'Shimmering veil [off]' ||
-			   itemName == 'Shimmering veil [on]' ||
-			   itemName == 'Golden cookie sound selector' ||
-			   itemName == 'Background selector' ||
-			   itemName == 'Milk selector' ||
-			   itemName == 'Sugar frenzy'
+			if(itemName == 'Festive biscuit' || itemName == 'Ghostly biscuit' ||
+			   itemName == 'Lovesick biscuit' || itemName == 'Fool\'s biscuit' ||
+			   itemName == 'Bunny biscuit'  || itemName == 'Chocolate egg' ||
+			   itemName == 'Golden switch [off]' || itemName == 'Golden switch [on]' ||
+			   itemName == 'Shimmering veil [off]' || itemName == 'Shimmering veil [on]' ||
+			   itemName == 'Golden cookie sound selector' || itemName == 'Background selector' ||
+			   itemName == 'Milk selector' || itemName == 'Sugar frenzy'
 			) {
 				continue;
 			}
@@ -583,6 +586,45 @@ CookieAutoClicker.launch = function() {
 				CookieAutoClicker.Ascend();
 				nextBreakpointIdx++;
 			}
+		}
+	}
+	
+	CookieAutoClicker.OpenSpecial = function(name) {
+		Game.specialTab=name;
+		Game.ToggleSpecialMenu(1);
+	}
+	CookieAutoClicker.CloseSpecial = function() {
+		Game.ToggleSpecialMenu(0);
+	}
+	
+	CookieAutoClicker.UpgradeDragon = function(level) {
+		
+		for(let i = Game.dragonLevel; i < level; i++) {
+			Game.UpgradeDragon();
+			
+			if(i == Game.dragonLevel) { break; }
+		}
+		
+		return Game.dragonLevel;
+	}
+	CookieAutoClicker.SetDragonAura = function(aura) {
+		CookieAutoClicker.OpenSpecial('dragon');
+		await CookieAutoClicker.sleep(250);
+		Game.SelectDragonAura(0);
+		await CookieAutoClicker.sleep(250);
+		Game.SetDragonAura(indexFromName(aura), 0);
+		await CookieAutoClicker.sleep(250);
+		document.querySelector('#promptOption0').click();
+		await CookieAutoClicker.sleep(100);
+		CookieAutoClicker.CloseSpecial();
+		
+		indexFromName = function() {
+			for(let i in Game.dragonAuras) {
+				if(aura == Game.dragonAuras[i].name){
+					return i;
+				}
+			}
+			return -1;
 		}
 	}
 	
