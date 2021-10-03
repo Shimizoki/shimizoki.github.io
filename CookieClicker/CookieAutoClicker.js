@@ -369,15 +369,16 @@ CookieAutoClicker.launch = function() {
 		}
 	}
 	
-	CookieAutoClicker.calcPurchaseCps = function(itemNames, amounts = [1]) {		
-		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
+	CookieAutoClicker.calcPurchaseCps = function(itemNames, amounts = [1]) {
+		let clicksPs = CookieAutoClicker.clicksPerSecond;
+		let curCps = Game.cookiesPs + (Game.computedMouseCps * clicksPs);
 	
 		let gains = CookieAutoClicker.CalculateGains(itemNames, amounts);
-		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
+		let newCps = gains[0] + (gains[1] * clicksPs);
 	
-		if(newCps - curCps <= 0){
-			console.log('Items: ' + itemNames + ' | amounts: ' + amounts + ' | cC: ' + curCps + ' | nC: ' + newCps + ' | g0' + gains[0] + ' | g1' + gains[1]);
-		}
+		//if(newCps < curCps){
+		//	console.log('Items: ' + itemNames + ' | amounts: ' + amounts + ' | cC: ' + curCps + ' | nC: ' + newCps + ' | g0' + gains[0] + ' | g1' + gains[1]);
+		//}
 		
 		return newCps - curCps;
 	}
