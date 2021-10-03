@@ -233,10 +233,10 @@ CookieAutoClicker.launch = function() {
 				if(deltaCps != 0) {
 					let roi = (timeToBuy + (building.getSumPrice(bulkBuy[c]) / deltaCps))/bulkBuy[c];
 					
-					if(roi < 0) {
-						console.log('ttB: ' + timeToBuy + ' | dCPS: ' + deltaCps + ' | ' + building.name + ' | amt: ' +
-									bulkBuy[c] + ' | bPrice' + building.getSumPrice(bulkBuy[c]));
-					}
+					//if(roi < 0) {
+					//	console.log('ttB: ' + timeToBuy + ' | dCPS: ' + deltaCps + ' | ' + building.name + ' | amt: ' +
+					//				bulkBuy[c] + ' | bPrice' + building.getSumPrice(bulkBuy[c]));
+					//}
 					
 					if(roi < bestRoi) {
 						bestRoi = roi;
@@ -375,6 +375,10 @@ CookieAutoClicker.launch = function() {
 		let gains = CookieAutoClicker.CalculateGains(itemNames, amounts);
 		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
 	
+		if(newCps - curCps <= 0){
+			console.log('Items: ' + itemNames + ' | amounts: ' + amounts + ' | cC: ' + curCps + ' | nC: ' + newCps + ' | g0' + gains[0] + ' | g1' + gains[1]);
+		}
+		
 		return newCps - curCps;
 	}
 		
