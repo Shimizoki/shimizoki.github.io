@@ -222,11 +222,11 @@ CookieAutoClicker.launch = function() {
 		let bestAmount = -1;
 		
 		let bulkBuy = [1, 10, 100];
-		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
+		for(let i=0; i < Game.ObjectsById.length; i++) {
 			let building = Game.ObjectsById[i];
-			if(building.locked) {continue;}
+			if(building.locked) {break;}
 			
-			for(c = 0; c < 3; c++) {
+			for(c = 0; c < bulkBuy.length; c++) {
 				let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(building.name, bulkBuy[c]);
 				let deltaCps = CookieAutoClicker.calcPurchaseCps([building.name], [bulkBuy[c]]);
 				
