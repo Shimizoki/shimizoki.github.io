@@ -139,7 +139,7 @@ CookieAutoClicker.launch = function() {
 	
 			if(best[0] != null) {
 				CookieAutoClicker.updateDisplay(best[0].name + " (" + CookieAutoClicker.msToTime(Math.round(best[1])*1000) + ")");
-				best[0].buy(best[3]);
+				best[0].buy(best[2]);
 			}
 		}, 100)
 	}
