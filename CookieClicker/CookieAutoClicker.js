@@ -132,16 +132,15 @@ CookieAutoClicker.launch = function() {
 		setInterval(()=>{
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
 			let bestUpgrade = CookieAutoClicker.calcBestUpgrade();
-			
+						
 			let best = (bestBuilding[1] < bestUpgrade[1]) ?
-				[Game.Objects[bestBuilding[0]], bestBuilding[1]] :
-				[Game.Upgrades[bestUpgrade[0]], bestUpgrade[1]];
+				[Game.Objects[bestBuilding[0]], bestBuilding[1], bestBuilding[2]] :
+				[Game.Upgrades[bestUpgrade[0]], bestUpgrade[1], bestUpgrade[2]];
 	
 			if(best[0] != null) {
 				CookieAutoClicker.updateDisplay(best[0].name + " (" + CookieAutoClicker.msToTime(Math.round(best[1])*1000) + ")");
-				best[0].buy();
+				best[0].buy(best[3]);
 			}
-	
 		}, 100)
 	}
 	
@@ -208,8 +207,8 @@ CookieAutoClicker.launch = function() {
 		return Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
 	}
 	
-	CookieAutoClicker.calcPurchaseInSeconds = function(item, useBank=true) {
-		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].price;
+	CookieAutoClicker.calcPurchaseInSeconds = function(item, amount, useBank=true) {
+		let price = Game.Upgrades[item] ? Game.Upgrades[item].getPrice() : Game.Objects[item].getSumPrice(amount);
 		let cps = CookieAutoClicker.calcCookiesPerSecond();
 		
 		return Math.max(0, (price-(useBank?Game.cookies:0)) / cps);
@@ -218,20 +217,29 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.calcBestBuilding = function() {
 		let bestRoi = Number.POSITIVE_INFINITY;
 		let bestId = -1;
+		let bestAmount = -1;
+		
+		let bulkBuy = [1, 10, 100];
 		for(let i=Game.ObjectsById.length-1; i >= 0; i--) {
-			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(Game.ObjectsById[i].name);
-			let deltaCps = CookieAutoClicker.calcPurchaseCps([Game.ObjectsById[i].name]);
+			let building = Game.ObjectsById[i];
+			if(building.locked) {continue;}
 			
-			if(Game.ObjectsById[i].locked == 0 && deltaCps != 0) {
-				let roi = timeToBuy + (Game.ObjectsById[i].price / deltaCps);
-				if(roi < bestRoi) {
-					bestRoi = roi;
-					bestId = Game.ObjectsById[i].id;
+			for(c = 0; c < 3; c++) {
+				let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(building.name, bulkBuy[c]);
+				let deltaCps = CookieAutoClicker.calcPurchaseCps([building.name], [bulkBuy[c]]);
+				
+				if(deltaCps != 0) {
+					let roi = timeToBuy + (building.getSumPrice(bulkBuy[c]) / deltaCps);
+					if(roi < bestRoi) {
+						bestRoi = roi;
+						bestId = Game.ObjectsById[i].id;
+						bestAmount = bulkBuy[c];
+					}
 				}
 			}
 		}
 	
-		return [Game.ObjectsById[bestId].name, bestRoi];
+		return [Game.ObjectsById[bestId].name, bestRoi, bestAmount];
 	}
 	
 	CookieAutoClicker.calcBestBuildingStacked = function() {
@@ -302,7 +310,7 @@ CookieAutoClicker.launch = function() {
 			}
 			
 			let timeToBuy = CookieAutoClicker.calcPurchaseInSeconds(itemName);
-			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, false);
+			let secondsOfCps = CookieAutoClicker.calcPurchaseInSeconds(itemName, 1, false);
 			
 			if(itemName == 'Bingo center/Research facility') {
 				deltaCps = (secondsOfCps < 60) ? (Game.UpgradesInStore[i].getPrice()*Number.MAX_SAFE_INTEGER)+Number.EPSILON : CookieAutoClicker.calcPurchaseCps([itemName]);
@@ -341,7 +349,7 @@ CookieAutoClicker.launch = function() {
 			}
 		}
 	
-		return [(bestId != -1)?Game.UpgradesById[bestId].name:null, bestRoi];
+		return [(bestId != -1)?Game.UpgradesById[bestId].name:null, bestRoi, 1];
 	}
 	
 	CookieAutoClicker.clickGoldenCookie = function() {
@@ -353,10 +361,10 @@ CookieAutoClicker.launch = function() {
 		}
 	}
 	
-	CookieAutoClicker.calcPurchaseCps = function(itemNames) {		
+	CookieAutoClicker.calcPurchaseCps = function(itemNames, amounts = [1]) {		
 		let curCps = Game.cookiesPs + (Game.computedMouseCps * CookieAutoClicker.clicksPerSecond);
 	
-		let gains = CookieAutoClicker.CalculateGains(itemNames);
+		let gains = CookieAutoClicker.CalculateGains(itemNames, amounts);
 		let newCps = gains[0] + (gains[1] * CookieAutoClicker.clicksPerSecond);
 	
 		return newCps - curCps;
@@ -639,7 +647,7 @@ CookieAutoClicker.launch = function() {
 		
 	}
 	
-	CookieAutoClicker.CalculateGains=function(considered)
+	CookieAutoClicker.CalculateGains=function(considered, amounts)
 	{
 		cookiesPs=0;
 		let mult=1;
@@ -775,7 +783,7 @@ CookieAutoClicker.launch = function() {
 	
 			if (Game.ascensionMode!=1) me.storedCps*=(1+me.level*0.01)*buildMult;
 			if (me.id==1 && Game.Has('Milkhelp&reg; lactose intolerance relief tablets') || considered.includes('Milkhelp&reg; lactose intolerance relief tablets')) storedCps*=1+0.05*milkProgress*milkMult;//this used to be "me.storedCps*=1+0.1*Math.pow(catMult-1,0.5)" which was. hmm
-			storedTotalCps=(me.amount + (considered.includes(me.name)?1:0))*storedCps;
+			storedTotalCps=(me.amount + (considered.includes(me.name)?amounts[considered.indexOf(me.name)]:0))*storedCps;
 			cookiesPs+=storedTotalCps;
 			cookiesPsByType[me.name]=storedTotalCps;
 		}
