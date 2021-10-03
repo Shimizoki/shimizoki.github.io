@@ -625,24 +625,22 @@ CookieAutoClicker.launch = function() {
 		return Game.dragonLevel;
 	}
 	CookieAutoClicker.SetDragonAura = async function(aura, slot) {
+		
+		auraIdx = -1;
+		for(let i in Game.dragonAuras) {
+			if(aura == Game.dragonAuras[i].name) { auraIdx = i; break; }
+		}
+		
 		CookieAutoClicker.OpenSpecial('dragon');
 		await CookieAutoClicker.sleep(250);
 		Game.SelectDragonAura(0);
 		await CookieAutoClicker.sleep(250);
-		Game.SetDragonAura(indexFromName(aura), slot);
+		Game.SetDragonAura(auraIdx, slot);
 		await CookieAutoClicker.sleep(250);
 		document.querySelector('#promptOption0').click();
 		await CookieAutoClicker.sleep(100);
 		CookieAutoClicker.CloseSpecial();
 		
-		indexFromName = function() {
-			for(let i in Game.dragonAuras) {
-				if(aura == Game.dragonAuras[i].name){
-					return i;
-				}
-			}
-			return -1;
-		}
 	}
 	
 	CookieAutoClicker.CalculateGains=function(considered)
