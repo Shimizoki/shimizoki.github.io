@@ -615,18 +615,16 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.CloseSpecial = function() {
 		Game.ToggleSpecialMenu(0);
 	}
-	
 	CookieAutoClicker.UpgradeDragon = function(level) {
 		
 		for(let i = Game.dragonLevel; i < level; i++) {
 			Game.UpgradeDragon();
-			
 			if(i == Game.dragonLevel) { break; }
 		}
 		
 		return Game.dragonLevel;
 	}
-	CookieAutoClicker.SetDragonAura = function(aura, slot) {
+	CookieAutoClicker.SetDragonAura = async function(aura, slot) {
 		CookieAutoClicker.OpenSpecial('dragon');
 		await CookieAutoClicker.sleep(250);
 		Game.SelectDragonAura(0);
