@@ -83,10 +83,29 @@ CookieAutoClicker.launch = function() {
 		
 		setInterval(() => {
 			if(Game.Has('A crumbly egg')) {
-				if(Game.dragonLevel < 14) { 
+				if(Game.dragonLevel < 5) { 
+					CookieAutoClicker.UpgradeDragon(5); 
+					if(Game.dragonLevel = 5) { 
+						CookieAutoClicker.SetDragonAura('Breath of Milk', 0); 
+					}
+				}
+				else if(Game.dragonLevel < 14) { 
 					CookieAutoClicker.UpgradeDragon(14); 
 					if(Game.dragonLevel = 14) { 
-						CookieAutoClicker.SetDragonAura('Dragonflight'); 
+						CookieAutoClicker.SetDragonAura('Dragonflight', 0); 
+					}
+				}
+				else if(Game.dragonLevel < 19) { 
+					CookieAutoClicker.UpgradeDragon(19); 
+					if(Game.dragonLevel = 19) { 
+						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
+					}
+				}
+				else if(Game.dragonLevel < 25) { 
+					CookieAutoClicker.UpgradeDragon(25); 
+					if(Game.dragonLevel = 25) { 
+						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
+						CookieAutoClicker.SetDragonAura('Breath of Milk', 1); 
 					}
 				}
 			}
@@ -607,12 +626,12 @@ CookieAutoClicker.launch = function() {
 		
 		return Game.dragonLevel;
 	}
-	CookieAutoClicker.SetDragonAura = function(aura) {
+	CookieAutoClicker.SetDragonAura = function(aura, slot) {
 		CookieAutoClicker.OpenSpecial('dragon');
 		await CookieAutoClicker.sleep(250);
 		Game.SelectDragonAura(0);
 		await CookieAutoClicker.sleep(250);
-		Game.SetDragonAura(indexFromName(aura), 0);
+		Game.SetDragonAura(indexFromName(aura), slot);
 		await CookieAutoClicker.sleep(250);
 		document.querySelector('#promptOption0').click();
 		await CookieAutoClicker.sleep(100);
