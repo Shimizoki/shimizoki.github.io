@@ -232,6 +232,12 @@ CookieAutoClicker.launch = function() {
 				
 				if(deltaCps != 0) {
 					let roi = (timeToBuy + (building.getSumPrice(bulkBuy[c]) / deltaCps))/bulkBuy[c];
+					
+					if(roi < 0) {
+						console.log('ttB: ' + timeToBuy + ' | dCPS: ' + deltaCps + ' | ' + building.name + ' | amt: ' +
+									bulkBuy[c] + ' | bPrice' + building.getSumPrice(bulkBuy[c]));
+					}
+					
 					if(roi < bestRoi) {
 						bestRoi = roi;
 						bestId = Game.ObjectsById[i].id;
