@@ -81,6 +81,7 @@ CookieAutoClicker.launch = function() {
 			CookieAutoClicker.TryDoPrestige();
 		}, 10000)
 		
+		/*
 		setInterval(() => {
 			if(Game.Has('A crumbly egg')) {
 				if(Game.dragonLevel < 5) { 
@@ -106,6 +107,7 @@ CookieAutoClicker.launch = function() {
 				}
 			}
 		}, 10000)
+		*/
 		
 		let fortunes = 0;
 		for(let i in Game.Tiers['fortune'].upgrades) {
@@ -229,7 +231,7 @@ CookieAutoClicker.launch = function() {
 				let deltaCps = CookieAutoClicker.calcPurchaseCps([building.name], [bulkBuy[c]]);
 				
 				if(deltaCps != 0) {
-					let roi = timeToBuy + (building.getSumPrice(bulkBuy[c]) / deltaCps);
+					let roi = (timeToBuy + (building.getSumPrice(bulkBuy[c]) / deltaCps))/bulkBuy[c];
 					if(roi < bestRoi) {
 						bestRoi = roi;
 						bestId = Game.ObjectsById[i].id;
