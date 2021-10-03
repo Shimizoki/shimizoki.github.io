@@ -81,33 +81,40 @@ CookieAutoClicker.launch = function() {
 			CookieAutoClicker.TryDoPrestige();
 		}, 10000)
 		
-		/*
+		
 		setInterval(() => {
 			if(Game.Has('A crumbly egg')) {
 				if(Game.dragonLevel < 5) { 
+					CookieAutoClicker.OpenSpecial('dragon');
 					if(CookieAutoClicker.UpgradeDragon(5) == 5) { 
 						CookieAutoClicker.SetDragonAura('Breath of Milk', 0); 
 					}
+					CookieAutoClicker.CloseSpecial();
 				}
 				else if(Game.dragonLevel < 14) { 
+					CookieAutoClicker.OpenSpecial('dragon');
 					if(CookieAutoClicker.UpgradeDragon(14) == 14) { 
 						CookieAutoClicker.SetDragonAura('Dragonflight', 0); 
 					}
+					CookieAutoClicker.CloseSpecial();
 				}
 				else if(Game.dragonLevel < 19) { 
+					CookieAutoClicker.OpenSpecial('dragon');
 					if(CookieAutoClicker.UpgradeDragon(19) == 19) { 
 						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
 					}
+					CookieAutoClicker.CloseSpecial();
 				}
 				else if(Game.dragonLevel < 25) { 
+					CookieAutoClicker.OpenSpecial('dragon');
 					if(CookieAutoClicker.UpgradeDragon(25) == 25) { 
 						CookieAutoClicker.SetDragonAura('Radiant Appetite', 0); 
 						CookieAutoClicker.SetDragonAura('Breath of Milk', 1); 
 					}
+					CookieAutoClicker.CloseSpecial();
 				}
 			}
 		}, 10000)
-		*/
 		
 		let fortunes = 0;
 		for(let i in Game.Tiers['fortune'].upgrades) {
