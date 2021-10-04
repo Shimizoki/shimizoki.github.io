@@ -143,14 +143,30 @@ CookieAutoClicker.launch = function() {
 		setInterval(()=>{
 			let bestBuilding = CookieAutoClicker.calcBestBuilding();
 			let bestUpgrade = CookieAutoClicker.calcBestUpgrade();
-						
-			let best = (bestBuilding[1] < bestUpgrade[1]) ?
-				[Game.Objects[bestBuilding[0]], bestBuilding[1], bestBuilding[2]] :
-				[Game.Upgrades[bestUpgrade[0]], bestUpgrade[1], bestUpgrade[2]];
+			let eventType = '';
+			
+			let best = []
+			if(bestBuilding[1] < bestUpgrade[1]) {
+				best = [Game.Objects[bestBuilding[0]], bestBuilding[1], bestBuilding[2]];
+				eventType = 'building';
+			}
+			else {
+				best = [Game.Upgrades[bestUpgrade[0]], bestUpgrade[1], bestUpgrade[2]];
+				eventType = 'upgrade';
+			}
+			
+				
 	
 			if(best[0] != null) {
 				CookieAutoClicker.updateDisplay(best[0].name + " (" + CookieAutoClicker.msToTime(Math.round(best[1])*1000) + ")");
-				best[0].buy(best[2]);
+				
+				if(best[0].getSumPrice(best[2]) < Game.cookies) {
+					best[0].buy(best[2]);
+					let eventObj = {};
+					eventObj.name = best[0].name;
+					eventObj.amount = best[2];
+					CookieAutoClicker.AddEvent(eventType, eventObj);
+				}
 			}
 		}, 100)
 	}
@@ -1052,6 +1068,18 @@ CookieAutoClicker.launch = function() {
 			event.time = Date.now() - CookieAutoClicker.runStartTimer;
 			event.result = "";
 		}
+		else if (eventType == 'building') {
+			event.valid = true;
+			event.name = (obj.amount > 0) ? "Buy Building" : "Sell Building"
+			event.time = Date.now() - CookieAutoClicker.runStartTimer;
+			event.result = obj.name + ' x' + obj.amount;
+		}
+		else if (eventType == 'upgrade') {
+			event.valid = true;
+			event.name = "Buy Upgrade"
+			event.time = Date.now() - CookieAutoClicker.runStartTimer;
+			event.result = obj.name;
+		}
 		
 		if(event.valid){
 			CookieAutoClicker.events.push(event);
@@ -1063,7 +1091,7 @@ CookieAutoClicker.launch = function() {
 		for(let i = 0; i < CookieAutoClicker.events.length; i++) {
 			if(!event.valid) {continue;}
 			
-			log += event.name + ': ' + CookieAutoClicker.msToTime(CookieAutoClicker.events[i].time)
+			log += '[' + CookieAutoClicker.msToTime(CookieAutoClicker.events[i].time) + ']' + event.name + ': ' + event.result;
 		}
 	}
 	
