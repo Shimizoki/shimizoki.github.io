@@ -1089,10 +1089,12 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.EventsToString = function() {
 		let log = '';
 		for(let i = 0; i < CookieAutoClicker.events.length; i++) {
-			if(!event.valid) {continue;}
+			if(!CookieAutoClicker.events[i].valid) {continue;}
+			let event = CookieAutoClicker.events[i];
 			
-			log += '[' + CookieAutoClicker.msToTime(CookieAutoClicker.events[i].time) + ']' + event.name + ': ' + event.result;
+			log += '[' + CookieAutoClicker.msToTime(event.time) + '] ' + event.name + ': ' + event.result + '\n';
 		}
+		return log;
 	}
 	
 	//if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
