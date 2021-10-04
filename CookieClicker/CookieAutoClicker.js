@@ -982,7 +982,13 @@ CookieAutoClicker.launch = function() {
 	
 	CookieAutoClicker.castForceHand = function() {
 		if(Game.ObjectsById[7].minigameLoaded) {
-			Game.ObjectsById[7].minigame.castSpell(Game.ObjectsById[7].minigame.spellsById[1],{});
+			let grimoire = Game.ObjectsById[7].minigame;
+			let fthof = grimoire.spellsById[1];
+			
+			if(grimoire.magic >= grimoire.getSpellCost(fthof)) {
+				grimoire.castSpell(grimoire.spellsById[1],{});
+				CookieAutoClicker.AddEvent('fthof', {});
+			}
 		}
 	}
 	
@@ -1040,9 +1046,24 @@ CookieAutoClicker.launch = function() {
 			event.time = Date.now() - CookieAutoClicker.runStartTimer;
 			event.result = "";
 		}
+		else if (eventType == 'fthof') {
+			event.valid = true;
+			event.name = "Cast FtHoF"
+			event.time = Date.now() - CookieAutoClicker.runStartTimer;
+			event.result = "";
+		}
 		
 		if(event.valid){
 			CookieAutoClicker.events.push(event);
+		}
+	}
+
+	CookieAutoClicker.EventsToString = function() {
+		let log = '';
+		for(let i = 0; i < CookieAutoClicker.events.length; i++) {
+			if(!event.valid) {continue;}
+			
+			log += event.name + ': ' + CookieAutoClicker.msToTime(CookieAutoClicker.events[i].time)
 		}
 	}
 	
