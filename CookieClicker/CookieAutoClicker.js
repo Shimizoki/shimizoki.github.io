@@ -125,6 +125,7 @@ CookieAutoClicker.launch = function() {
 					if(Game.Has('Fortune cookies')) {
 						if(document.querySelector('.fortune')) {
 							document.querySelector('.fortune').click();
+							CookieAutoClicker.AddEvent('fortune', {});
 
 							fortunes = 0;
 							for(let i in Game.Tiers['fortune'].upgrades) {
@@ -1079,6 +1080,12 @@ CookieAutoClicker.launch = function() {
 			event.name = "Buy Upgrade"
 			event.time = Date.now() - CookieAutoClicker.runStartTimer;
 			event.result = obj.name;
+		}
+		else if (eventType == 'fortune') {
+			event.valid = true;
+			event.name = "Fortune Cookie"
+			event.time = Date.now() - CookieAutoClicker.runStartTimer;
+			event.result = "";
 		}
 		
 		if(event.valid){
