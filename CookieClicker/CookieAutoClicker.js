@@ -14,6 +14,8 @@ CookieAutoClicker.millionCookiesTimer = 0;
 CookieAutoClicker.firstHCTimer = 0;
 CookieAutoClicker.firstAscendTimer = 0;
 
+CookieAutoClicker.events = [];
+
 CookieAutoClicker.launch = function() {
 	CookieAutoClicker.init = function() {
 		'use strict';
@@ -1027,6 +1029,20 @@ CookieAutoClicker.launch = function() {
 		let years = Math.floor(ms / 31536000000);
 		
 		return (years==0?"":(years + "y ")) + (days==0?"":(days%365 + "d ")) + (hours==0?"":(hours%24 + "h ")) + (minutes==0?"":(minutes%60 + "m ")) + seconds + "s";
+	}
+	
+	CookieAutoClicker.AddEvent = function(eventType, obj) {
+		let event = {};
+		if (eventType == 'gc') {
+			event.valid = true;
+			event.name = "Golden Cookie"
+			event.time = Date.now() - CookieAutoClicker.runStartTimer;
+			event.result = "";
+		}
+		
+		if(event.valid){
+			CookieAutoClicker.events.push(event);
+		}
 	}
 	
 	//if(CCSE.ConfirmGameVersion(CookieAutoClicker.name, CookieAutoClicker.version, CookieAutoClicker.GameVersion)) Game.registerMod(CookieAutoClicker.name, CookieAutoClicker); // CookieAutoClicker.init();
