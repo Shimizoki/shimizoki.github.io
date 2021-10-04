@@ -368,6 +368,7 @@ CookieAutoClicker.launch = function() {
 	CookieAutoClicker.clickGoldenCookie = function() {
 		for(let i = 0; i < Game.shimmers.length; i++) {
 			if(Game.shimmers[i].type == 'golden') {
+				CookieAutoClicker.AddEvent('gc', Game.shimmers[i]);
 				Game.shimmers[i].pop();
 				CookieAutoClicker.castForceHand();
 			}
