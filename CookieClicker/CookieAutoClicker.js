@@ -9,6 +9,7 @@ CookieAutoClicker.clicksPerSecond = 0;
 CookieAutoClicker.nextPurchase = 'UnInitialized';
 CookieAutoClicker.isLoaded = 0;
 
+CookieAutoClicker.timerDirty = true;
 CookieAutoClicker.runStartTimer = 0;
 CookieAutoClicker.millionCookiesTimer = 0;
 CookieAutoClicker.firstHCTimer = 0;
@@ -32,6 +33,7 @@ CookieAutoClicker.launch = function() {
 		let millionTimer = setInterval(() => {
 			if(Game.cookiesEarned >= 1000000){
 				CookieAutoClicker.millionCookiesTimer = Date.now()-CookieAutoClicker.runStartTimer;
+				CookieAutoClicker.timerDirty = true;
 				clearInterval(millionTimer);
 			}
 		}, 1);
@@ -39,6 +41,7 @@ CookieAutoClicker.launch = function() {
 		let hCTimer = setInterval(() => {
 			if(Game.ascendMeterLevel >= 1){
 				CookieAutoClicker.firstHCTimer = Date.now()-CookieAutoClicker.runStartTimer;
+				CookieAutoClicker.timerDirty = true;
 				clearInterval(hCTimer);
 			}
 		}, 1);
@@ -46,6 +49,7 @@ CookieAutoClicker.launch = function() {
 		let ascendTimer = setInterval(() => {
 			if(Game.resets >= 1){
 				CookieAutoClicker.firstAscendTimer = Date.now()-CookieAutoClicker.runStartTimer;
+				CookieAutoClicker.timerDirty = true;
 				clearInterval(ascendTimer);
 			}
 		}, 1);
@@ -146,27 +150,34 @@ CookieAutoClicker.launch = function() {
 			let bestUpgrade = CookieAutoClicker.calcBestUpgrade();
 			let eventType = '';
 			
-			let best = []
 			if(bestBuilding[1] < bestUpgrade[1]) {
-				best = [Game.Objects[bestBuilding[0]], bestBuilding[1], bestBuilding[2]];
-				eventType = 'building';
+				let building = Game.Objects[bestBuilding[0]];
+				let roiTime = Math.round(bestBuilding[1])*1000;
+				
+				CookieAutoClicker.updateDisplay(building.name + " (" + CookieAutoClicker.msToTime(roiTime) + ")");
+				
+				if(building.getSumPrice(bestBuilding[2]) < Game.cookies) {
+					building.buy(bestBuilding[2]);
+					
+					let eventObj = {};
+					eventObj.name = bestBuilding[0];
+					eventObj.amount = bestBuilding[2];
+					CookieAutoClicker.AddEvent('building', eventObj);
+				}
 			}
 			else {
-				best = [Game.Upgrades[bestUpgrade[0]], bestUpgrade[1], bestUpgrade[2]];
-				eventType = 'upgrade';
-			}
-			
+				let upgrade = Game.Upgrades[bestUpgrade[0]];
+				let roiTime = Math.round(bestUpgrade[1])*1000;
 				
-	
-			if(best[0] != null) {
-				CookieAutoClicker.updateDisplay(best[0].name + " (" + CookieAutoClicker.msToTime(Math.round(best[1])*1000) + ")");
+				CookieAutoClicker.updateDisplay(upgrade.name + " (" + CookieAutoClicker.msToTime(roiTime) + ")");
 				
-				if(best[0].getSumPrice(best[2]) < Game.cookies) {
-					best[0].buy(best[2]);
+				if(upgrade.getPrice() < Game.cookies) {
+					upgrade.buy(bestBuilding[2]);
+					
 					let eventObj = {};
-					eventObj.name = best[0].name;
-					eventObj.amount = best[2];
-					CookieAutoClicker.AddEvent(eventType, eventObj);
+					eventObj.name = bestUpgrade[0];
+					eventObj.amount = bestUpgrade[2];
+					CookieAutoClicker.AddEvent('upgrade', eventObj);
 				}
 			}
 		}, 100)
@@ -1030,15 +1041,18 @@ CookieAutoClicker.launch = function() {
 	}
 	
 	CookieAutoClicker.updateDisplay = function(newPurchase){
-		if(newPurchase != nextPurchase && newPurchase != "") {
+		if(newPurchase != "") {
 			let element = document.querySelector('#nextPurchase');
 			element.textContent = "Next: " + newPurchase;
 			CookieAutoClicker.nextPurchase = newPurchase;
 		}
 		
-		document.querySelector('#timerBar').textContent = "Million: " + CookieAutoClicker.msToTime(CookieAutoClicker.millionCookiesTimer) + 
-			" | HC: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstHCTimer) + 
-			" | Ascend: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstAscendTimer);
+		if(CookieAutoClicker.timerDirty) {
+			document.querySelector('#timerBar').textContent = "Million: " + CookieAutoClicker.msToTime(CookieAutoClicker.millionCookiesTimer) + 
+				" | HC: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstHCTimer) + 
+				" | Ascend: " + CookieAutoClicker.msToTime(CookieAutoClicker.firstAscendTimer);
+			CookieAutoClicker.timerDirty = false;
+		}
 	}
 	
 	CookieAutoClicker.sleep = function(ms) {
